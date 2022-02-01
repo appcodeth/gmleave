@@ -198,7 +198,7 @@ msgstr ""
 #. module: gmleave_leave
 #: model:ir.ui.menu,name:gmleave_leave.menu_leave
 msgid "Leave"
-msgstr "การลา"
+msgstr "ลางาน"
 
 #. module: gmleave_leave
 #: model:ir.actions.act_window,name:gmleave_leave.action_leave_list
@@ -279,7 +279,7 @@ msgstr "ไม่อนุมัติ"
 #. module: gmleave_leave
 #: model:ir.ui.menu,name:gmleave_leave.menu_sub_request
 msgid "Request"
-msgstr "ใบลา"
+msgstr "รายการ"
 
 #. module: gmleave_leave
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__sick_leave_stat

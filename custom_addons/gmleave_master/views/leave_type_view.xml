@@ -37,5 +37,5 @@
         </field>
     </record>
 
-    <menuitem id="menu_leave_type_list" parent="gmleave_master.menu_sub_leave" name="Leave Type" action="action_leave_type_list"/>
+    <menuitem id="menu_leave_type_list" parent="gmleave_master.menu_sub_data" name="Leave Type" action="action_leave_type_list" sequence="434"/>
 </odoo>

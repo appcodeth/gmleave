@@ -2,7 +2,6 @@
 <odoo>
     <menuitem id="menu_master" name="Master" sequence="4" web_icon="gmleave_master,static/description/icon.png"/>
     <menuitem id="menu_sub_employee" parent="menu_master" name="Employee" sequence="41"/>
-    <menuitem id="menu_sub_leave" parent="menu_master" name="Leave" sequence="42" groups="gmleave_master.group_master_manager"/>
-    <menuitem id="menu_sub_holiday" parent="menu_master" name="Holiday" sequence="43" groups="gmleave_master.group_master_manager"/>
-    <menuitem id="menu_sub_data" parent="menu_master" name="Data" sequence="44" groups="gmleave_master.group_master_manager"/>
+    <menuitem id="menu_sub_holiday" parent="menu_master" name="Holiday" sequence="42" groups="gmleave_master.group_master_manager"/>
+    <menuitem id="menu_sub_data" parent="menu_master" name="Data" sequence="43" groups="gmleave_master.group_master_manager"/>
 </odoo>
