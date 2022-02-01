@@ -196,11 +196,15 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: gmleave_leave
-#: model:ir.actions.act_window,name:gmleave_leave.action_leave_list
 #: model:ir.ui.menu,name:gmleave_leave.menu_leave
-#: model:ir.ui.menu,name:gmleave_leave.menu_leave_list
 msgid "Leave"
 msgstr "การลา"
+
+#. module: gmleave_leave
+#: model:ir.actions.act_window,name:gmleave_leave.action_leave_list
+#: model:ir.ui.menu,name:gmleave_leave.menu_leave_list
+msgid "Leave"
+msgstr "รายการลา"
 
 #. module: gmleave_leave
 #: model_terms:ir.ui.view,arch_db:gmleave_leave.view_leave_search
