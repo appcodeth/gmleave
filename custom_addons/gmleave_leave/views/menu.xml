@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_widget_assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/gmleave_leave/static/src/css/custom_widget.css"/>
+            <script type="text/javascript" src="/gmleave_leave/static/src/js/custom_widget.js"/>
+        </xpath>
+    </template>
+
+    <menuitem id="menu_leave" name="Leave" sequence="3" web_icon="gmleave_leave,static/description/icon.png"/>
+    <menuitem id="menu_sub_request" parent="menu_leave" name="Request"/>
+</odoo>

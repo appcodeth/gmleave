@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="DashboardOverview">
+		<div class="container-fluid h-100 mb-5" style="overflow-y:auto">
+			<div class="row my-4">
+				<div class="col-lg-3">
+					<div class="card bg-success card-summary shadow-sm">
+						<div class="card-body text-white">
+							<div class="icon float-right">
+								<i class="fa fa-file-alt fa-3x"/>
+							</div>
+                            <h1 id="count-all"></h1>
+                            <div class="caption">จำนวนคำขอลางาน</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-lg-3">
+					<div class="card bg-info card-summary shadow-sm">
+						<div class="card-body text-white">
+							<div class="icon float-right">
+								<i class="fa fa-check fa-3x"/>
+							</div>
+                            <h1 id="count-approve"></h1>
+                            <div class="caption">อนุมัติแล้ว</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-lg-3">
+					<div class="card bg-danger card-summary shadow-sm">
+						<div class="card-body text-white">
+							<div class="icon float-right">
+								<i class="fa fa-times fa-3x"/>
+							</div>
+                            <h1 id="count-cancel"></h1>
+                            <div class="caption">ไม่อนุมัติ</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-lg-3">
+					<div class="card bg-dark card-summary shadow-sm">
+						<div class="card-body text-white">
+							<div class="icon float-right">
+								<i class="fa fa-users fa-3x"/>
+							</div>
+                            <h1 id="count-employee"></h1>
+                            <div class="caption">จำนวนพนักงาน</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="row mb-4">
+				<div class="col-lg-8">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<div class="form-inline float-right">
+								<select id="overview_type" class="form-control form-control-sm">
+									<option value="all">ทุกประเภท</option>
+                                    <option value="bytype">แยกประเภท</option>
+								</select>
+                                <div id="reportrange" class="daterange-picker">
+									<i class="fa fa-calendar"/>
+                                    <span/>
+                                    <i class="fa fa-caret-down"/>
+								</div>
+							</div>
+                            <h4 class="mt-1 mb-0">สถิติการลา</h4>
+						</div>
+                        <div class="card-body">
+							<div id="bar-container"/>
+                        </div>
+					</div>
+				</div>
+                <div class="col-lg-4">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<div class="form-inline float-right">
+								<div id="reportrange1" class="daterange-picker">
+									<i class="fa fa-calendar"/>
+                                    <span/>
+                                    <i class="fa fa-caret-down"/>
+								</div>
+							</div>
+                            <h4 class="mt-1 mb-0">สัดส่วนการลา</h4>
+						</div>
+                        <div class="card-body">
+							<div id="pie-container"/>
+                        </div>
+					</div>
+				</div>
+			</div>
+            <div class="row mb-4">
+				<div class="col-lg-8">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<div class="form-inline float-right">
+								<select id="personal_type" class="form-control form-control-sm">
+									<option value="all">ทุกประเภท</option>
+                                    <option value="bytype">แยกประเภท</option>
+								</select>
+                                <div id="reportrange2" class="daterange-picker">
+									<i class="fa fa-calendar"/>
+                                    <span/>
+                                    <i class="fa fa-caret-down"/>
+								</div>
+							</div>
+                            <h4 class="mt-1 mb-0">รายบุคคล</h4>
+						</div>
+                        <div class="card-body">
+							<div id="person-container"/>
+                        </div>
+					</div>
+				</div>
+                <div class="col-lg-4">
+					<div class="card">
+						<div class="card-header bg-transparent">
+							<h4 class="mt-1 mb-0">รออนุมัติ
+								<span id="data-count"/>
+							</h4>
+						</div>
+                        <table class="table table-hover" id="table-approve" style="margin-bottom:15px">
+							<thead>
+								<tr>
+									<th>รายการ</th>
+                                    <th>จำนวนวันลา (วัน)</th>
+                                    <th/>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+        <script type="text/javascript" src="/gmleave_dashboard/static/src/js/dashboard_chart.js"/>
+	</t>
+</templates>

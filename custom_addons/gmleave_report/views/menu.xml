@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="gmleave_report_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/gmleave_report/static/src/vendor/datepicker/css/bootstrap-datepicker3.min.css"/>
+            <script type="text/javascript" src="/gmleave_report/static/src/js/report.js"/>
+            <script type="text/javascript" src="/gmleave_report/static/src/vendor/datepicker/js/bootstrap-datepicker.min.js"></script>
+            <script type="text/javascript" src="/gmleave_report/static/src/vendor/datepicker/locales/bootstrap-datepicker.th.min.js"></script>
+        </xpath>
+    </template>
+
+    <record id="action_leave_report" model="ir.actions.client">
+        <field name="name">Leave Report</field>
+        <field name="tag">gmleave_leave_report</field>
+    </record>
+
+    <record id="action_leave_waiting_report" model="ir.actions.client">
+        <field name="name">Leave Waiting Report</field>
+        <field name="tag">gmleave_leave_waiting_report</field>
+    </record>
+
+    <record id="action_leave_usage_report" model="ir.actions.client">
+        <field name="name">Leave Usage Report</field>
+        <field name="tag">gmleave_leave_usage_report</field>
+    </record>
+
+    <record id="action_leave_toprank_report" model="ir.actions.client">
+        <field name="name">Leave Top Rank Report</field>
+        <field name="tag">gmleave_leave_toprank_report</field>
+    </record>
+
+    <record id="action_leave_holiday_report" model="ir.actions.client">
+        <field name="name">Leave Holiday Report</field>
+        <field name="tag">gmleave_leave_holiday_report</field>
+    </record>
+
+    <menuitem id="menu_report" name="รายงาน" sequence="7" groups="gmleave_master.group_master_manager" web_icon="gmleave_report,static/description/icon.png"/>
+    <menuitem id="menu_sub_report" parent="menu_report" name="รายงาน" sequence="71"/>
+    <menuitem id="menu_leave_report" parent="menu_sub_report" action="action_leave_report" name="การลาพนักงาน"/>
+    <menuitem id="menu_leave_waiting_report" parent="menu_sub_report" action="action_leave_waiting_report" name="ใบลารออนุมัติ"/>
+    <menuitem id="menu_leave_top_report" parent="menu_sub_report" action="action_leave_toprank_report" name="พนักงานที่ลาสูงสุด"/>
+    <menuitem id="menu_leave_usage_report" parent="menu_sub_report" action="action_leave_usage_report" name="จำนวนวันลาใช้ไป"/>
+    <menuitem id="menu_holiday_announce_report" parent="menu_sub_report" action="action_leave_holiday_report" name="ประกาศวันหยุดประจำปี"/>
+</odoo>

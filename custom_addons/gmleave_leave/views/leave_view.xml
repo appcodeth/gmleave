@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_leave_search">
+        <field name="name">leave.search</field>
+        <field name="model">gmleave.leave</field>
+        <field name="arch" type="xml">
+            <search string="Leave Filter">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="year"/>
+                <field name="employee_id"/>
+                <filter string="Current Year" name="current_year" domain="[('year','=',datetime.date.today().strftime('%Y'))]"/>
+                <filter name="group_leave_type" string="Leave Type" context="{'group_by':'leave_type_id'}"/>
+                <filter name="group_employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                <filter name="group_approver" string="Approver" context="{'group_by':'approve_id'}"/>
+                <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_leave_list">
+        <field name="name">leave.list</field>
+        <field name="model">gmleave.leave</field>
+        <field name="arch" type="xml">
+            <tree string="Leave List">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="leave_type_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="employee_id"/>
+                <field name="approve_id"/>
+                <field name="state" widget="labelstatus"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_leave_form">
+        <field name="name">leave.form</field>
+        <field name="model">gmleave.leave</field>
+        <field name="arch" type="xml">
+            <form string="Leave Form">
+                <header attrs="{'invisible': [('id','=',False)]}" groups="gmleave_leave.group_leave_manager">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve"/>
+                    <button string="Approve" class="oe_highlight" type="object" name="do_leave_approve" attrs="{'invisible': [('state','not in',['draft'])]}"/>
+                    <button string="Refuse" class="btn btn-outline-danger" type="object" name="do_leave_refuse" attrs="{'invisible': [('state','not in',['draft'])]}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" bg_color="bg-danger" title="Refused" attrs="{'invisible': [('state', 'not in', ['refuse'])]}"/>
+                    <widget name="web_ribbon" bg_color="bg-danger" title="Canceled" attrs="{'invisible': [('state', 'not in', ['cancel'])]}"/>
+                    <widget name="web_ribbon" bg_color="bg-success" title="Approved" attrs="{'invisible': [('state', 'not in', ['approve'])]}"/>
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('state', 'not in', ['draft'])]}">
+                        <button class="oe_stat_button" icon="fa-user-md icon">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">
+                                    <field name="sick_leave_stat"/>
+                                </span>
+                                <span class="o_stat_text">Sick Leave</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-sun-o icon">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">
+                                    <field name="annual_leave_stat"/>
+                                </span>
+                                <span class="o_stat_text">Annual</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-user-times icon">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">
+                                    <field name="personal_leave_stat"/>
+                                </span>
+                                <span class="o_stat_text">Personal</span>
+                            </div>
+                        </button>
+                    </div>
+                    <h1 attrs="{'invisible': [('code', '=', False)]}">
+                        <field name="code" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="leave_type_id"/>
+                            <field name="description"/>
+                            <field name="employee_id" invisible="1"/>
+                            <field name="approve_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="year" invisible="1"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="all_day"/>
+                            <field name="start_time" widget="timepicker" attrs="{'invisible': [('all_day', '=', True)]}"/>
+                            <field name="end_time" widget="timepicker" attrs="{'invisible': [('all_day', '=', True)]}"/>
+                            <field name="duration" invisible="1"/>
+                            <field name="duration_text" force_save="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_leave_calendar">
+        <field name="name">leave.calendar</field>
+        <field name="model">gmleave.leave</field>
+        <field name="arch" type="xml">
+            <calendar string="Leave Request" date_start="start_date" date_stop="end_date" all_day="all_day" event_open_popup="true" mode="month" color="employee_id" quick_add="False">
+                <field name="name"/>
+                <field name="leave_type_id"/>
+                <field name="description"/>
+                <field name="all_day"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_leave_list">
+        <field name="name">Leave</field>
+        <field name="res_model">gmleave.leave</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="context">{"search_default_current_year":1}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click this to create the first leave</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_leave_list" parent="gmleave_leave.menu_sub_request" name="Leave" action="action_leave_list"/>
+</odoo>

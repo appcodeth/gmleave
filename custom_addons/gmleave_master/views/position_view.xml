@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_position_list">
+        <field name="name">position.list</field>
+        <field name="model">gmleave.position</field>
+        <field name="arch" type="xml">
+            <tree string="Position List">
+                <field name="name"/>
+                <field name="name_en"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_position_form">
+        <field name="name">position.form</field>
+        <field name="model">gmleave.position</field>
+        <field name="arch" type="xml">
+            <form string="Position Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="name_en"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_position_list">
+        <field name="name">Position</field>
+        <field name="res_model">gmleave.position</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click this to create the first position</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_position_list" parent="gmleave_master.menu_sub_data" name="Position" action="action_position_list"/>
+</odoo>

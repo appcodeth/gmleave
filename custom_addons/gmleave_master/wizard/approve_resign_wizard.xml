@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_approve_resign_wizard" model="ir.ui.view">
+        <field name="name">Confirm Resign</field>
+        <field name="model">gmleave.approve.resign.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirm">
+                <group>
+                    <strong>
+                        Do you want to resign employee
+                        [
+                        <field name="employee_name" readonly="1"/>
+                        ]
+                        ?
+                    </strong>
+                </group>
+                <footer>
+                    <button string="OK" name="do_confirm_approve" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="gmleave.holiday" id="holiday1">
+            <field name="year">2022</field>
+            <field name="name">ชดเชยวันขึ้นปีใหม่</field>
+            <field name="from_date">2022-01-03</field>
+        </record>
+        <record model="gmleave.holiday" id="holiday2">
+            <field name="year">2022</field>
+            <field name="name">วันมาฆะบูชา</field>
+            <field name="from_date">2022-02-16</field>
+        </record>
+        <record model="gmleave.holiday" id="holiday3">
+            <field name="year">2022</field>
+            <field name="name">วันจักรี</field>
+            <field name="from_date">2022-04-06</field>
+        </record>
+        <record model="gmleave.holiday" id="holiday4">
+            <field name="year">2022</field>
+            <field name="name">วันสงกรานต์</field>
+            <field name="from_date">2022-04-13</field>
+            <field name="to_date">2022-04-15</field>
+        </record>
+    </data>
+</odoo>

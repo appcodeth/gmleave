@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_leave_type_list">
+        <field name="name">leave_type.list</field>
+        <field name="model">gmleave.leave_type</field>
+        <field name="arch" type="xml">
+            <tree string="Leave Type List">
+                <field name="name"/>
+                <field name="default_day"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_leave_type_form">
+        <field name="name">leave_type.form</field>
+        <field name="model">gmleave.leave_type</field>
+        <field name="arch" type="xml">
+            <form string="Leave Type Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="default_day"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_leave_type_list">
+        <field name="name">Leave Type</field>
+        <field name="res_model">gmleave.leave_type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click this to create the first leave type</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_leave_type_list" parent="gmleave_master.menu_sub_leave" name="Leave Type" action="action_leave_type_list"/>
+</odoo>

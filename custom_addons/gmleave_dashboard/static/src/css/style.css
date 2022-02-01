@@ -1,0 +1,23 @@
+body {
+  background-color: #ecf0f1;
+}
+
+.card-summary .icon .fa {
+  opacity: 0.4;
+}
+
+.card-summary .card-body {
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.daterange-picker {
+  margin-left: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.highcharts-credits {
+  display: none;
+  visibility: hidden;
+}

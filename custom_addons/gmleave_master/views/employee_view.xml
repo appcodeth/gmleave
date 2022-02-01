@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_search">
+        <field name="name">employee.search</field>
+        <field name="model">gmleave.employee</field>
+        <field name="arch" type="xml">
+            <search string="Search Filter">
+                <field name="name"/>
+                <field name="name_en"/>
+                <field name="nickname"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <filter string="Active" name="employee_active" domain="[('is_active','=',True)]"/>
+                <filter name="group_position" string="Position" context="{'group_by':'position_id'}"/>
+                <filter name="group_department" string="Department" context="{'group_by':'department_id'}"/>
+                <filter name="group_emptype" string="Employee Type" context="{'group_by':'emptype_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_list">
+        <field name="name">employee.list</field>
+        <field name="model">gmleave.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Employee List">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="nickname"/>
+                <field name="department_id"/>
+                <field name="position_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_form">
+        <field name="name">employee.form</field>
+        <field name="model">gmleave.employee</field>
+        <field name="arch" type="xml">
+            <form string="Employee Form">
+                <header attrs="{'invisible': ['|',('id','=',False),('is_active','=',False)]}" groups="gmleave_master.group_master_manager">
+                    <button string="Resign Employee" class="btn btn-outline-danger" type="object" name="do_resign_employee"/>
+                </header>
+                <field name="is_active" invisible="1"/>
+                <sheet>
+                    <widget name="web_ribbon" bg_color="bg-danger" title="Resigned" attrs="{'invisible': [('is_active','=',True)]}"/>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Employee Name"/>
+                        <h1>
+                            <field name="name" placeholder="Enter employee name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="name_en"/>
+                            <field name="nickname"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="gender" widget='radio' options="{'horizontal': true}"/>
+                        </group>
+                        <group>
+                            <field name="emptype_id"/>
+                            <field name="department_id"/>
+                            <field name="position_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Authentication">
+                            <group>
+                                <group>
+                                    <field name="email" widget="email"/>
+                                    <field name="password" password="True"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="User Settings">
+                            <group>
+                                <group>
+                                    <field name="user_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Leave Settings">
+                            <field name="leave_type_line">
+                                <tree string="Leave Type Line" editable="bottom">
+                                    <field name="leave_type_id"/>
+                                    <field name="default_day" width="180px"/>
+                                    <field name="leave_day" width="180px"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Leave History">
+                            <field name="leave_history_line" readonly="1">
+                                <tree create="false" delete="false">
+                                    <field name="start_date" string="Date"/>
+                                    <field name="name" string="Leave Type"/>
+                                    <field name="duration" string="Duration Days"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_kanban">
+        <field name="name">employee.kanban</field>
+        <field name="model">gmleave.employee</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('gmleave.employee','image',record.id.raw_value)" alt="Employee"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <h4 style="margin:0">
+                                    <field name="name"/>
+                                </h4>
+                                <div class="small">
+                                    <field name="position_id"/>
+                                    <div>
+                                        <strong>Tel :</strong>
+                                        <field name="phone"/>
+                                    </div>
+                                    <div>
+                                        <strong>Email :</strong>
+                                        <field name="email"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_employee_list">
+        <field name="name">Employee</field>
+        <field name="res_model">gmleave.employee</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"search_default_employee_active":1}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click this to create the first employee</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_employee_list" parent="gmleave_master.menu_sub_employee" name="Employee" action="action_employee_list" sequence="411"/>
+</odoo>

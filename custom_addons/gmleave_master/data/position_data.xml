@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="gmleave.position" id="position1">
+            <field name="name">ผู้จัดการ</field>
+            <field name="name_en">Manager</field>
+        </record>
+        <record model="gmleave.position" id="position2">
+            <field name="name">ผู้ช่วยผู้จัดการ</field>
+            <field name="name_en">Assistant Manager</field>
+        </record>
+        <record model="gmleave.position" id="position3">
+            <field name="name">หัวหน้าฝ่าย</field>
+            <field name="name_en">Supervisor</field>
+        </record>
+        <record model="gmleave.position" id="position4">
+            <field name="name">นักวิเคราะห์ระบบ</field>
+            <field name="name_en">System Analyst</field>
+        </record>
+        <record model="gmleave.position" id="position5">
+            <field name="name">นักพัฒนาซอฟต์แวร์</field>
+            <field name="name_en">Software Developer</field>
+        </record>
+    </data>
+</odoo>

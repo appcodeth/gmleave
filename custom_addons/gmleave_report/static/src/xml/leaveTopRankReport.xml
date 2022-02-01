@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="LeaveTopRankReport">
+        <div class="container-fluid h-100 mb-5" style="overflow-y:auto">
+            <h2 class="my-4">พนักงานที่ลาสูงสุด</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="float-right">
+                        <a class="btn btn-danger text-white" id="btnRenderPDF"><i class="fa fa-file-pdf-o"/>&amp;nbsp;PDF</a>
+                        <a class="btn btn-info text-white" id="btnRenderExcel"><i class="fa fa-file-excel-o"/>&amp;nbsp;Excel</a>
+                    </div>
+                    <div class="form-inline">
+                        <label class="mx-2">จากวันที่</label>
+                        <input type="text" id="start_date" name="start_date" class="form-control datepicker mr-2"/>
+                        <label class="mx-2">ถึงวันที่</label>
+                        <input type="text" id="end_date" name="end_date" class="form-control datepicker mr-4"/>
+                        <a class="btn btn-success text-white" id="btnShowReport">แสดงรายงาน</a>
+                        <a class="btn btn-secondary ml-1" id="btnClearReport">ล้าง</a>
+                    </div>
+                </div>
+            </div>
+            <div id="panel-report" style="display:none">
+                <table class="table table-bordered table-hover bg-white" id="table-report">
+                </table>
+            </div>
+        </div>
+        <script src="/gmleave_report/static/src/js/reportLibs.js"/>
+        <script src="/gmleave_report/static/src/js/leaveTopRankReport.js"/>
+    </t>
+</templates>

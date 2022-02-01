@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_leave_all,gmleave.leave,model_gmleave_leave,base.group_user,1,0,0,0
+access_leave_user,gmleave.leave,model_gmleave_leave,group_leave_user,1,1,1,1
+access_leave_manager,gmleave.leave,model_gmleave_leave,group_leave_manager,1,1,1,1
+access_leave_approve_all,gmleave.leave_approve_wizard,model_gmleave_leave_approve_wizard,base.group_user,1,0,0,0
+access_leave_approve_user,gmleave.leave_approve_wizard,model_gmleave_leave_approve_wizard,group_leave_user,1,0,0,0
+access_leave_approve_manager,gmleave.leave_approve_wizard,model_gmleave_leave_approve_wizard,group_leave_manager,1,1,1,1
+access_leave_cancel_all,gmleave.leave_cancel_wizard,model_gmleave_leave_cancel_wizard,base.group_user,1,0,0,0
+access_leave_cancel_user,gmleave.leave_cancel_wizard,model_gmleave_leave_cancel_wizard,group_leave_user,1,0,0,0
+access_leave_cancel_manager,gmleave.leave_cancel_wizard,model_gmleave_leave_cancel_wizard,group_leave_manager,1,1,1,1
