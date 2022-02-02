@@ -106,7 +106,7 @@ $('#btnRenderPDF').on('click', function() {
 
     var start_date = getDate(str_start);
     var end_date = getDate(str_end);
-    window.open('http://localhost:8080/birt/run?__report=leave_by_personal.rptdesign&__format=pdf&start_date=' + start_date + '&end_date=' + end_date, '_blank');
+    window.open('http://157.230.255.67:8080/birt/run?__report=leave_by_personal.rptdesign&__format=pdf&start_date=' + start_date + '&end_date=' + end_date, '_blank');
 });
 
 $('#btnRenderExcel').on('click', function() {
@@ -121,7 +121,7 @@ $('#btnRenderExcel').on('click', function() {
 
     var start_date = getDate(str_start);
     var end_date = getDate(str_end);
-    window.open('http://localhost:8080/birt/run?__report=leave_by_personal.rptdesign&__format=xlsx&start_date=' + start_date + '&end_date=' + end_date, '_blank');
+    window.open('http://157.230.255.67:8080/birt/run?__report=leave_by_personal.rptdesign&__format=xlsx&start_date=' + start_date + '&end_date=' + end_date, '_blank');
 });
 
 

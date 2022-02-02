@@ -87,7 +87,7 @@ $('#btnRenderPDF').on('click', function() {
         alert('Please select year');
         return;
     }
-    window.open('http://localhost:8080/birt/run?__report=waiting_leave.rptdesign&__format=pdf&year=' + year, '_blank');
+    window.open('http://157.230.255.67:8080/birt/run?__report=waiting_leave.rptdesign&__format=pdf&year=' + year, '_blank');
 });
 
 $('#btnRenderExcel').on('click', function() {
@@ -97,7 +97,7 @@ $('#btnRenderExcel').on('click', function() {
         alert('Please select year');
         return;
     }
-    window.open('http://localhost:8080/birt/run?__report=waiting_leave.rptdesign&__format=xlsx&year=' + year, '_blank');
+    window.open('http://157.230.255.67:8080/birt/run?__report=waiting_leave.rptdesign&__format=xlsx&year=' + year, '_blank');
 });
 
 $(function () {
