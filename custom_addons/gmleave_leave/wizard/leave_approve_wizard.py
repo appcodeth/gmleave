@@ -66,4 +66,5 @@ class LeaveApproveWizard(models.TransientModel):
             'stop_date': leave.end_date,
             'stop_datetime': False,
             'allday': True,
+            'description': leave.description,
         })
