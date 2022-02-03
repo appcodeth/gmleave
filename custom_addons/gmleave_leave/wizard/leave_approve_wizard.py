@@ -1,5 +1,6 @@
 from odoo import models, fields
 from odoo.http import request
+from ..models.time_utils import float_to_time
 
 
 class LeaveApproveWizard(models.TransientModel):
@@ -44,3 +45,25 @@ class LeaveApproveWizard(models.TransientModel):
             mail.with_delay(eta=60).send()
         except Exception as e:
             print('Send email error!', e)
+
+        # add event to calendar
+        start_time = ''
+        if leave.start_time:
+            start_time = float_to_time(leave.start_time) + ':00'
+        end_time = ''
+        if leave.end_time:
+            end_time = float_to_time(leave.end_time) + ':00'
+
+        start = leave.start_date.strftime('%Y-%m-%d') + ' ' + ('00:00:00' if leave.all_day else start_time)
+        end = leave.end_date.strftime('%Y-%m-%d') + ' ' + ('00:00:00' if leave.all_day else end_time)
+
+        self.env['calendar.event'].create({
+            'name': leave.name,
+            'start': start,
+            'start_date': leave.start_date,
+            'start_datetime': False,
+            'stop': end,
+            'stop_date': leave.end_date,
+            'stop_datetime': False,
+            'allday': True,
+        })

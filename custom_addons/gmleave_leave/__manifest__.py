@@ -4,7 +4,7 @@
     'author': 'Greenmount',
     'website': 'http://www.greenmount.co.th/gmleave',
     'category': 'Custom',
-    'depends': ['base', 'gmleave_master'],
+    'depends': ['base', 'calendar', 'gmleave_master'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
