@@ -14,12 +14,14 @@ class ReportApi(http.Controller):
         end_date = request.params.get('end_date') + ' 23:59:59'
         sql = """
             select
+                distinct
                 em.code,
                 em.name,
                 dp.name as dept_name,
                 po.name as pos_name,
                 lt.name as leave_type,
-                lv.duration as duration_day
+                lv.duration as duration_day,
+                lv.code as leave_code
             from gmleave_leave lv
                 left join gmleave_leave_type lt on lv.leave_type_id=lt.id
                 left join gmleave_employee em on lv.employee_id=em.id
@@ -31,7 +33,7 @@ class ReportApi(http.Controller):
         request.cr.execute(sql)
         results = request.cr.fetchall()
         rows = []
-        df = pd.DataFrame(results, columns=['code', 'name', 'dept_name', 'pos_name', 'leave_type', 'duration_day'])
+        df = pd.DataFrame(results, columns=['code', 'name', 'dept_name', 'pos_name', 'leave_type', 'duration_day', 'leave_code'])
         df = pd.crosstab([df.code, df.name, df.dept_name, df.pos_name], df.leave_type, values=df.duration_day, aggfunc=lambda x: x.astype(float).sum()).fillna(0)
         columns = [df.columns[i] for i in range(df.shape[1])]
         for row in df.itertuples():
