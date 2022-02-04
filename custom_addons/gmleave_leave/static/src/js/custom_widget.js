@@ -33,3 +33,4 @@ odoo.define('gmleave_leave.custom_widget', function (require) {
         LabelStatusWidget: LabelStatusWidget,
     }
 });
+

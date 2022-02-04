@@ -4,6 +4,8 @@ from odoo import models, fields, api
 from odoo.http import request
 from .time_utils import float_to_time
 
+HALF_DAY = 4
+
 
 class Leave(models.Model):
     _name = 'gmleave.leave'
@@ -117,13 +119,22 @@ class Leave(models.Model):
                 diff = data2 - data1
                 diff_day = np.busday_count(start_date, end_date)
                 hours = divmod(diff.total_seconds(), 3600)[0]
+                #
                 # half day leave
-                if (hours + 1) <= 4:
-                    self.duration = diff_day
+                #
+                # half day leave in 1 day
+                if (hours + 1) <= HALF_DAY:
+                    self.duration = diff_day + 0.5
                     self.duration_text = '{0} ชั่วโมง'.format(hours + 1)
+                # more than one days
                 else:
-                    self.duration = diff_day + 1
-                    self.duration_text = '{0} วัน'.format(diff_day + 1)
+                    duration_day = 0
+                    if ((hours + 1) % 24) <= HALF_DAY:
+                        duration_day = diff_day + 0.5
+                    else:
+                        duration_day = diff_day + 1
+                    self.duration = duration_day
+                    self.duration_text = '{0} วัน'.format(duration_day)
 
             if self.employee_id and self.leave_type_id:
                 self.name = '{0} ({1}) {2}'.format(self.employee_id.name, self.leave_type_id.name, self.duration_text)
