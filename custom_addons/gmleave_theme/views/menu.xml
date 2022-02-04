@@ -3,6 +3,7 @@
     <template id="gmleave_theme_backend" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/gmleave_theme/static/src/css/style.css"/>
+            <script src="/gmleave_theme/static/src/js/custom.js"/>
         </xpath>
     </template>
 </odoo>

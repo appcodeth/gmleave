@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0-20220131\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-01 10:36+0000\n"
-"PO-Revision-Date: 2022-02-01 10:36+0000\n"
+"POT-Creation-Date: 2022-02-04 06:32+0000\n"
+"PO-Revision-Date: 2022-02-04 06:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,6 +61,11 @@ msgstr "อนุมัติ"
 #: model_terms:ir.ui.view,arch_db:gmleave_leave.view_leave_search
 msgid "Approver"
 msgstr "ผู้อนุมัติ"
+
+#. module: gmleave_leave
+#: model:ir.actions.act_window,name:gmleave_leave.action_calendar_event
+msgid "Calendar"
+msgstr ""
 
 #. module: gmleave_leave
 #: model:ir.model.fields.selection,name:gmleave_leave.selection__gmleave_leave__state__cancel
@@ -126,14 +131,18 @@ msgstr ""
 msgid ""
 "Do you want to approve\n"
 "                        ["
-msgstr "คุณต้องการอนุมัติใบลานี้หรือไม่\n["
+msgstr ""
+"คุณต้องการอนุมัติใบลานี้หรือไม่\n"
+"["
 
 #. module: gmleave_leave
 #: model_terms:ir.ui.view,arch_db:gmleave_leave.view_leave_cancel_wizard
 msgid ""
 "Do you want to decline\n"
 "                        ["
-msgstr "คุณต้องการ \"ไม่อนุมัติ\" ใบลานี้หรือไม่\n["
+msgstr ""
+"คุณต้องการ \"ไม่อนุมัติ\" ใบลานี้หรือไม่\n"
+"["
 
 #. module: gmleave_leave
 #: model:ir.model.fields.selection,name:gmleave_leave.selection__gmleave_leave__state__draft
@@ -161,6 +170,11 @@ msgstr "วันที่สิ้นสุด"
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__end_time
 msgid "End Time"
 msgstr "เวลาสิ้นสุด"
+
+#. module: gmleave_leave
+#: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__attachment
+msgid "File Attachment"
+msgstr "ไฟล์แนบ"
 
 #. module: gmleave_leave
 #: model:ir.module.category,name:gmleave_leave.module_gmleave_leave
@@ -196,12 +210,8 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: gmleave_leave
-#: model:ir.ui.menu,name:gmleave_leave.menu_leave
-msgid "Leave"
-msgstr "ลางาน"
-
-#. module: gmleave_leave
 #: model:ir.actions.act_window,name:gmleave_leave.action_leave_list
+#: model:ir.ui.menu,name:gmleave_leave.menu_leave
 #: model:ir.ui.menu,name:gmleave_leave.menu_leave_list
 msgid "Leave"
 msgstr "รายการลา"
@@ -250,6 +260,11 @@ msgid "Manager"
 msgstr ""
 
 #. module: gmleave_leave
+#: model_terms:ir.ui.view,arch_db:gmleave_leave.view_calendar_event_calendar
+msgid "Meetings"
+msgstr ""
+
+#. module: gmleave_leave
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__name
 msgid "Name"
 msgstr "ชื่อ"
@@ -282,6 +297,11 @@ msgid "Request"
 msgstr "รายการ"
 
 #. module: gmleave_leave
+#: model_terms:ir.actions.act_window,help:gmleave_leave.action_calendar_event
+msgid "Schedule a new meeting"
+msgstr ""
+
+#. module: gmleave_leave
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__sick_leave_stat
 msgid "Sick Leave"
 msgstr "ลาป่วย"
@@ -301,6 +321,14 @@ msgstr "เวลาเริ่มต้น"
 #: model_terms:ir.ui.view,arch_db:gmleave_leave.view_leave_search
 msgid "State"
 msgstr "สถานะ"
+
+#. module: gmleave_leave
+#: model_terms:ir.actions.act_window,help:gmleave_leave.action_calendar_event
+msgid ""
+"The calendar is shared between employees and fully integrated with\n"
+"                other applications such as the employee leaves or the business\n"
+"                opportunities."
+msgstr ""
 
 #. module: gmleave_leave
 #: model:res.groups,name:gmleave_leave.group_leave_user

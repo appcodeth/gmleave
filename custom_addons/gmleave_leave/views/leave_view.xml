@@ -82,6 +82,7 @@
                         <group>
                             <field name="leave_type_id"/>
                             <field name="description"/>
+                            <field name="attachment"/>
                             <field name="employee_id" invisible="1"/>
                             <field name="approve_id" invisible="1"/>
                         </group>

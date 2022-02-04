@@ -1,7 +1,7 @@
 import numpy as np
 from datetime import datetime
-from ago import human
 from odoo import models, fields, api
+from odoo.http import request
 from .time_utils import float_to_time
 
 
@@ -33,11 +33,57 @@ class Leave(models.Model):
     sick_leave_stat = fields.Char('Sick Leave', readonly=True, default=lambda x: x.get_sick_leave())
     personal_leave_stat = fields.Char('Personal Leave', readonly=True, default=lambda x: x.get_personal_leave())
     annual_leave_stat = fields.Char('Annual Leave', readonly=True, default=lambda x: x.get_annual_leave())
+    attachment = fields.Binary('File Attachment', attachment=True)
+
+    def send_email(self, vals):
+        # get current url
+        url = ''
+        emp_id = self.env['gmleave.employee'].search([('user_id', '=', self.env.user.id)], limit=1)
+        if emp_id:
+            #
+            # send email to requester
+            #
+            try:
+                msg = 'ใบลา {0} ของท่าน รอการอนุมัติ'.format(vals['code'])
+                if url:
+                    msg = 'ใบลา <a href="{0}">{1}</a> ของท่าน รอการอนุมัติ'.format(url, vals['code'])
+                mail = self.env['mail.mail'].create({
+                    'subject': 'ใบลารอการอนุมัติ',
+                    'email_from': self.env.company.email,
+                    'email_to': emp_id.email,
+                    'body_html': msg,
+                })
+                mail.with_delay(eta=60).send()
+            except Exception as e:
+                print('Send email error!', e)
+
+            #
+            # send mail to approver
+            #
+            cc_list = []
+            users = self.env.ref('gmleave_leave.group_leave_manager').users
+            for u in users:
+                if '@' in u.login:
+                    cc_list.append(u.login)
+            try:
+                msg = 'ใบลาเลขที่ "{0} - {1}" รอการอนุมัติจากท่าน'.format(vals['code'], vals['name'])
+                if url:
+                    msg = 'ใบลาเลขที่ <a href="{0}">{1} - {2}</a> รอการอนุมัติจากท่าน'.format(url, vals['code'], vals['name'])
+                mail = self.env['mail.mail'].create({
+                    'subject': 'ใบลารอการอนุมัติ',
+                    'email_from': self.env.company.email,
+                    'email_to': ','.join(cc_list),
+                    'body_html': msg,
+                })
+                mail.with_delay(eta=60).send()
+            except Exception as e:
+                print('Send email error!', e)
 
     @api.model
     def create(self, vals):
         seq = self.env['ir.sequence'].next_by_code('gmleave.leave_no') or '-'
         vals['code'] = seq
+        self.send_email(vals)
         return super(Leave, self).create(vals)
 
     @api.onchange('all_day')

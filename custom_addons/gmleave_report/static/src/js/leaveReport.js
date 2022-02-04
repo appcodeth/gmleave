@@ -51,7 +51,7 @@ function runReport() {
                 var total_row = 0;
                 $.each(res.columns, function(idx, col) {
                     col_value += '<td class="text-center">' + data[col] + '</td>';
-                    total_row += parseFloat(data[col], 10);
+                    total_row += parseFloat(data[col] || '0', 10);
                 });
                 col_value += '<td class="text-center">' + (total_row) + '</td>';
 

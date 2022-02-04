@@ -32,15 +32,21 @@ class LeaveApproveWizard(models.TransientModel):
         leave.sudo().write(leave_data)
 
         # send email
+        cc_list = []
+        users = self.env.ref('gmleave_leave.group_leave_manager').users
+        for u in users:
+            if '@' in u.login:
+                cc_list.append(u.login)
         try:
             msg = 'ใบลา {0} ของท่าน ได้รับการอนุมัติแล้ว'.format(leave.code)
             if url:
                 msg = 'ใบลา <a href="{0}">{1}</a> ของท่าน ได้รับการอนุมัติแล้ว'.format(url, leave.code)
             mail = self.env['mail.mail'].create({
-                'subject': 'อนุมัติการลา',
+                'subject': 'ใบลาได้รับการอนุมัติ',
                 'email_from': self.env.company.email,
                 'email_to': leave.employee_id.email,
                 'body_html': msg,
+                'email_cc': ','.join(cc_list)
             })
             mail.with_delay(eta=60).send()
         except Exception as e:

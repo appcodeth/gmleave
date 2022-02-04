@@ -11,6 +11,7 @@
         'data/sequence.xml',
         'views/menu.xml',
         'views/leave_view.xml',
+        'views/calendar_view.xml',
         'wizard/leave_approve_wizard.xml',
         'wizard/leave_cancel_wizard.xml',
     ],
