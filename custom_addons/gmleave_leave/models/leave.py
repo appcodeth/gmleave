@@ -2,7 +2,8 @@ import numpy as np
 from datetime import datetime
 from odoo import models, fields, api
 from odoo.http import request
-from .time_utils import float_to_time
+
+# from .time_utils import float_to_time
 
 HALF_DAY = 4
 
@@ -19,6 +20,10 @@ class Leave(models.Model):
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date('End Date', required=True)
     all_day = fields.Boolean('All Day', default=True)
+    by_time = fields.Selection([
+        ('morning', 'Morning'),
+        ('afternoon', 'Afternoon'),
+    ], default='morning', string='By Time')
     start_time = fields.Char('Start Time')
     end_time = fields.Char('End Time')
     employee_id = fields.Many2one('gmleave.employee', string='Employee', default=lambda x: x.get_default_employee())
@@ -91,8 +96,18 @@ class Leave(models.Model):
     @api.onchange('all_day')
     def change_all_day(self):
         if not self.all_day:
-            self.start_time = ''
-            self.end_time = ''
+            self.start_time = '09:00'
+            self.end_time = '12:00'
+            self.by_time = 'morning'
+
+    @api.onchange('by_time')
+    def change_by_time(self):
+        if self.by_time == 'morning':
+            self.start_time = '09:00'
+            self.end_time = '12:00'
+        else:
+            self.start_time = '13:00'
+            self.end_time = '18:00'
 
     @api.onchange('leave_type_id')
     def change_leave_type(self):
@@ -112,23 +127,28 @@ class Leave(models.Model):
                 self.duration_text = '{0} วัน'.format(diff_day + 1)
 
             if not self.all_day and self.start_time and self.end_time:
-                start_time = float_to_time(self.start_time)
-                end_time = float_to_time(self.end_time)
+                # start_time = float_to_time(self.start_time)
+                # end_time = float_to_time(self.end_time)
+                start_time = self.start_time
+                end_time = self.end_time
                 data1 = datetime.strptime(self.start_date.strftime('%Y-%m-%d') + ' ' + start_time, '%Y-%m-%d %H:%M')
                 data2 = datetime.strptime(self.end_date.strftime('%Y-%m-%d') + ' ' + end_time, '%Y-%m-%d %H:%M')
                 diff = data2 - data1
                 diff_day = np.busday_count(start_date, end_date)
                 hours = divmod(diff.total_seconds(), 3600)[0]
+
                 #
                 # half day leave
                 #
+
                 # half day leave in 1 day
+                duration_day = 0
                 if (hours + 1) <= HALF_DAY:
+                    duration_day = diff_day + 0.5
                     self.duration = diff_day + 0.5
-                    self.duration_text = '{0} ชั่วโมง'.format(hours + 1)
+                    self.duration_text = '{0} วัน'.format(duration_day)
                 # more than one days
                 else:
-                    duration_day = 0
                     if ((hours + 1) % 24) <= HALF_DAY:
                         duration_day = diff_day + 0.5
                     else:

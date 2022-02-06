@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0-20220131\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-04 06:32+0000\n"
-"PO-Revision-Date: 2022-02-04 06:32+0000\n"
+"POT-Creation-Date: 2022-02-06 06:59+0000\n"
+"PO-Revision-Date: 2022-02-06 06:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,11 @@ msgstr "<span class=\"o_stat_text\">ลากิจ</span>"
 #: model_terms:ir.ui.view,arch_db:gmleave_leave.view_leave_form
 msgid "<span class=\"o_stat_text\">Sick Leave</span>"
 msgstr "<span class=\"o_stat_text\">ลาป่วย</span>"
+
+#. module: gmleave_leave
+#: model:ir.model.fields.selection,name:gmleave_leave.selection__gmleave_leave__by_time__afternoon
+msgid "Afternoon"
+msgstr "บ่าย"
 
 #. module: gmleave_leave
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__all_day
@@ -63,9 +68,9 @@ msgid "Approver"
 msgstr "ผู้อนุมัติ"
 
 #. module: gmleave_leave
-#: model:ir.actions.act_window,name:gmleave_leave.action_calendar_event
-msgid "Calendar"
-msgstr ""
+#: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__by_time
+msgid "By Time"
+msgstr "ช่วงเวลา"
 
 #. module: gmleave_leave
 #: model:ir.model.fields.selection,name:gmleave_leave.selection__gmleave_leave__state__cancel
@@ -265,6 +270,11 @@ msgid "Meetings"
 msgstr ""
 
 #. module: gmleave_leave
+#: model:ir.model.fields.selection,name:gmleave_leave.selection__gmleave_leave__by_time__morning
+msgid "Morning"
+msgstr "เช้า"
+
+#. module: gmleave_leave
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__name
 msgid "Name"
 msgstr "ชื่อ"
@@ -297,11 +307,6 @@ msgid "Request"
 msgstr "รายการ"
 
 #. module: gmleave_leave
-#: model_terms:ir.actions.act_window,help:gmleave_leave.action_calendar_event
-msgid "Schedule a new meeting"
-msgstr ""
-
-#. module: gmleave_leave
 #: model:ir.model.fields,field_description:gmleave_leave.field_gmleave_leave__sick_leave_stat
 msgid "Sick Leave"
 msgstr "ลาป่วย"
@@ -321,14 +326,6 @@ msgstr "เวลาเริ่มต้น"
 #: model_terms:ir.ui.view,arch_db:gmleave_leave.view_leave_search
 msgid "State"
 msgstr "สถานะ"
-
-#. module: gmleave_leave
-#: model_terms:ir.actions.act_window,help:gmleave_leave.action_calendar_event
-msgid ""
-"The calendar is shared between employees and fully integrated with\n"
-"                other applications such as the employee leaves or the business\n"
-"                opportunities."
-msgstr ""
 
 #. module: gmleave_leave
 #: model:res.groups,name:gmleave_leave.group_leave_user

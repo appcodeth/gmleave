@@ -92,8 +92,9 @@
                             <field name="start_date"/>
                             <field name="end_date"/>
                             <field name="all_day"/>
-                            <field name="start_time" widget="timepicker" attrs="{'invisible': [('all_day', '=', True)]}"/>
-                            <field name="end_time" widget="timepicker" attrs="{'invisible': [('all_day', '=', True)]}"/>
+                            <field name="by_time" widget='radio' options="{'horizontal': true}" attrs="{'invisible': [('all_day', '=', True)]}"/>
+                            <field name="start_time" readonly="1" force_save="1" attrs="{'invisible': [('all_day', '=', True)]}"/>
+                            <field name="end_time" readonly="1" force_save="1" attrs="{'invisible': [('all_day', '=', True)]}"/>
                             <field name="duration" invisible="1"/>
                             <field name="duration_text" force_save="1"/>
                         </group>
