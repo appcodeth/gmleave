@@ -137,24 +137,24 @@ class Leave(models.Model):
                 diff_day = np.busday_count(start_date, end_date)
                 hours = divmod(diff.total_seconds(), 3600)[0]
 
-                #
-                # half day leave
-                #
+                duration_day = diff_day + 0.5
+                self.duration = duration_day
+                self.duration_text = '{0} วัน'.format(duration_day)
 
-                # half day leave in 1 day
-                duration_day = 0
-                if (hours + 1) <= HALF_DAY:
-                    duration_day = diff_day + 0.5
-                    self.duration = diff_day + 0.5
-                    self.duration_text = '{0} วัน'.format(duration_day)
-                # more than one days
-                else:
-                    if ((hours + 1) % 24) <= HALF_DAY:
-                        duration_day = diff_day + 0.5
-                    else:
-                        duration_day = diff_day + 1
-                    self.duration = duration_day
-                    self.duration_text = '{0} วัน'.format(duration_day)
+                # # half day leave in 1 day
+                # duration_day = 0
+                # if (hours + 1) <= HALF_DAY:
+                #     duration_day = diff_day + 0.5
+                #     self.duration = diff_day + 0.5
+                #     self.duration_text = '{0} วัน'.format(duration_day)
+                # # more than one days
+                # else:
+                #     if ((hours + 1) % 24) <= HALF_DAY:
+                #         duration_day = diff_day + 0.5
+                #     else:
+                #         duration_day = diff_day + 1
+                #     self.duration = duration_day
+                #     self.duration_text = '{0} วัน'.format(duration_day)
 
             if self.employee_id and self.leave_type_id:
                 self.name = '{0} ({1}) {2}'.format(self.employee_id.name, self.leave_type_id.name, self.duration_text)
