@@ -72,7 +72,10 @@ class LeaveApproveWizard(models.TransientModel):
         start = leave.start_date.strftime('%Y-%m-%d') + ' ' + ('00:00:00' if leave.all_day else start_time)
         end = leave.end_date.strftime('%Y-%m-%d') + ' ' + ('00:00:00' if leave.all_day else end_time)
 
-        self.env['calendar.event'].create({
+        #
+        # add event calendar
+        #
+        events = {
             'name': leave.name,
             'start': start,
             'start_date': leave.start_date,
@@ -82,4 +85,12 @@ class LeaveApproveWizard(models.TransientModel):
             'stop_datetime': False,
             'allday': True,
             'description': leave.description,
-        })
+            'leave_id': leave.id,
+        }
+
+        if leave.employee_id.user_id:
+            events['user_id'] = leave.employee_id.user_id.id
+            if leave.employee_id.user_id.partner_id:
+                events['partner_id'] = leave.employee_id.user_id.partner_id.id
+
+        self.env['calendar.event'].sudo().create(events)

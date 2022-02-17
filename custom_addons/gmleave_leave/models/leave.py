@@ -218,3 +218,8 @@ class Leave(models.Model):
                 'default_leave_name': self.name,
             }
         }
+
+    def unlink(self):
+        for slf in self:
+            self.env['calendar.event'].search([('leave_id', '=', slf.id)]).unlink()
+        return super(Leave, self).unlink()

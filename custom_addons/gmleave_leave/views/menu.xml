@@ -4,9 +4,11 @@
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/gmleave_leave/static/src/css/custom_widget.css"/>
             <script type="text/javascript" src="/gmleave_leave/static/src/js/custom_widget.js"/>
+            <script type="text/javascript" src="/gmleave_leave/static/src/js/calendar_event.js"/>
         </xpath>
     </template>
 
     <menuitem id="menu_leave" name="Leave" sequence="3" web_icon="gmleave_leave,static/description/icon.png"/>
     <menuitem id="menu_sub_request" parent="menu_leave" name="Request"/>
+    <menuitem id="calendar.mail_menu_calendar" name="Calendar" sequence="4" action="calendar.action_calendar_event" web_icon="calendar,static/description/icon.png" groups="base.group_user"/>
 </odoo>

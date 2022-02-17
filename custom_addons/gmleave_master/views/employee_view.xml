@@ -150,5 +150,5 @@
         </field>
     </record>
 
-    <menuitem id="menu_employee_list" parent="gmleave_master.menu_sub_employee" name="Employee" action="action_employee_list" sequence="411"/>
+    <menuitem id="menu_employee_list" parent="gmleave_master.menu_sub_employee" name="Employee" action="action_employee_list" sequence="511"/>
 </odoo>

@@ -22,6 +22,9 @@ class LeaveCancelWizard(models.TransientModel):
         leave = self.env['gmleave.leave'].browse([self.leave_id])
         leave.sudo().write(leave_data)
 
+        # delete event calendar
+        self.env['calendar.event'].search([('leave_id', '=', leave.id)]).unlink()
+
         # send email
         cc_list = []
         users = self.env.ref('gmleave_leave.group_leave_manager').users
