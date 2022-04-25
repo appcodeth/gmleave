@@ -52,34 +52,46 @@
                 <div id="wrapper">
                     <div id="sidebar">
                         <ul class="sidemenu">
-                            <li>
-                                <a href="#">
+                            <li t-attf-class="{{ 'active' if menu == 'index' else '' }}">
+                                <a href="/gmot/">
                                     <img src="/gmot_master/static/src/img/icon/app1.png" alt=""/>
                                     Dashboard
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li t-attf-class="{{ 'active' if menu == 'salary' else '' }}">
+                                <a href="/gmot/salary/">
                                     <img src="/gmot_master/static/src/img/icon/app2.png" alt=""/>
-                                    Dashboard
+                                    Salary
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li t-attf-class="{{ 'active' if menu == 'ot_open' else '' }}">
+                                <a href="/gmot/ot/open/">
                                     <img src="/gmot_master/static/src/img/icon/app3.png" alt=""/>
-                                    Dashboard
+                                    OT Open
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li t-attf-class="{{ 'active' if menu == 'ot_jobs' else '' }}">
+                                <a href="/gmot/ot/jobs/">
                                     <img src="/gmot_master/static/src/img/icon/app4.png" alt=""/>
-                                    Dashboard
+                                    OT Jobs
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">
+                                <a href="/gmot/ot/approve/">
                                     <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
-                                    Dashboard
+                                    OT Approve
+                                </a>
+                            </li>
+                            <li t-attf-class="{{ 'active' if menu == 'config' else '' }}">
+                                <a href="/gmot/config/">
+                                    <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
+                                    OT Config
+                                </a>
+                            </li>
+                            <li t-attf-class="{{ 'active' if menu == 'report' else '' }}">
+                                <a href="/gmot/report/">
+                                    <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
+                                    Report
                                 </a>
                             </li>
                         </ul>

@@ -56,6 +56,10 @@ body {
     text-decoration: none;
 }
 
+.sidemenu li.active>a {
+    background-color: #444 !important;
+}
+
 .sidemenu li:hover>a {
     background-color: #444;
 }

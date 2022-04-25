@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="employee_page" name="Employee Page">
+    <template id="ot_open_page" name="OT Open Page">
         <t t-call="gmot_master.master_layouts">
             <xpath expr="//t[@t-raw='0']" position="replace">
+                <h1>OT Open</h1>
             </xpath>
             <xpath expr="//t[@t-raw='1']" position="replace">
                 <script>

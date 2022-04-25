@@ -9,6 +9,14 @@
     'data': [
         'templates/layouts.xml',
         'templates/index.xml',
+        'templates/report.xml',
+        'templates/salary.xml',
+        'templates/config.xml',
+        'templates/ot_approve.xml',
+        'templates/ot_approve_draft.xml',
+        'templates/ot_approve_history.xml',
+        'templates/ot_jobs.xml',
+        'templates/ot_open.xml',
     ],
     'demo': [],
 }
