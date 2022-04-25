@@ -46,10 +46,11 @@ app.factory('factory', function($http) {
     };
 
     factory.saveEmployee = function(data) {
+        params = {'data': data};
         return $http({
             method: 'post',
             url: '/api/employee/save/',
-            data: data,
+            data: {'params': params},
         });
     };
 
@@ -78,7 +79,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
 
     $scope.saveEmployee = function() {
         factory.saveEmployee($scope.employee_list).then(function(res) {
-            if (res.data.ok) {
+            if (res.data.result.ok) {
                 alert('Save completed');
                 $scope.getEmployeeList();
             }
@@ -96,7 +97,9 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.deleteEmployeeHistory = function(history_id) {
         if (confirm('Delete this item?')) {
             factory.deleteEmployeeHistory(history_id, $scope.employee.id).then(function(res) {
-                $scope.employee_history_list = res.data.rows;
+                factory.getEmployeeHistory($scope.employee.id).then(function(hist) {
+                    $scope.employee_history_list = hist.data.rows;
+                });
                 $scope.getEmployeeList();
             });
         }

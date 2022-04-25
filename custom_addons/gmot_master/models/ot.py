@@ -5,6 +5,7 @@ class Employee(models.Model):
     _inherit = 'gmleave.employee'
     effective_date = fields.Date('Effective Date')
     salary = fields.Float('Salary')
+    emp_salary_line = fields.One2many('gmot.employee_salary', 'employee_id', string='Employee Salary')
 
 
 class EmployeeSalary(models.Model):
@@ -13,4 +14,4 @@ class EmployeeSalary(models.Model):
     employee_id = fields.Many2one('gmleave.employee', ondelete='cascade')
     date = fields.Date('Date')
     salary = fields.Float('Salary')
-    active = fields.Boolean(default=False)
+    active = fields.Boolean(default=True)
