@@ -13,10 +13,12 @@
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/datepicker/bootstrap-datepicker.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/daterangepicker/daterangepicker.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/multiselect/multi-select.css"/>
+                <link rel="stylesheet" href="/gmot_master/static/src/vendor/toastr/toastr.min.css"/>
+                <link rel="stylesheet" href="/gmot_master/static/src/vendor/busy/angular-busy.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/css/style.css"/>
             </head>
             <body>
-                <nav class="navbar navbar-expand-md navbar-dark bg-blue mb-4">
+                <nav class="navbar navbar-expand-md navbar-dark bg-blue">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="#">OT</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +99,7 @@
                         </ul>
                     </div>
                     <div id="content">
-                        <t t-raw="0"></t>
+                        <t t-raw="head or ''"/>
                     </div>
                 </div>
                 <script src="/gmot_master/static/src/vendor/jquery/jquery-3.3.1.min.js"></script>
@@ -110,7 +112,10 @@
                 <script src="/gmot_master/static/src/vendor/highcharts/highcharts.js"></script>
                 <script src="/gmot_master/static/src/vendor/highcharts/modules/exporting.js"></script>
                 <script src="/gmot_master/static/src/vendor/highcharts/modules/export-data.js"></script>
-                <t t-raw="1"></t>
+                <script src="/gmot_master/static/src/vendor/busy/angular-busy.min.js"></script>
+                <script src="/gmot_master/static/src/vendor/toastr/toastr.min.js"></script>
+                <script src="/gmot_master/static/src/vendor/paging/paging.min.js"></script>
+                <t t-raw="script or ''"/>
             </body>
         </html>
     </template>

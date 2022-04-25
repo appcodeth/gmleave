@@ -16,8 +16,34 @@ class OTApi(http.Controller):
                 'code': o.code,
                 'name': o.name,
                 'department': o.department_id.name,
-                'postition': o.position_id.name,
+                'position': o.position_id.name,
                 'effective_date': o.effective_date.strftime('%d/%m/%Y') if o.effective_date else '',
                 'salary': o.salary,
             })
+        return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
+
+
+    @http.route('/api/employee/history/', type='http', auth='public')
+    def get_employee_history(self, **kw):
+        id = request.params.get('id')
+        objects = request.env['gmot.employee_salary'].sudo().search([('employee_id.id', '=', id)])
+
+        rows = []
+        last_date_count = 0
+        for obj in objects:
+            cols = {
+                'id': obj.id,
+                'date': obj.date.strftime('%d/%m/%Y') if obj.date else '',
+                'salary': obj.salary,
+                'is_delete': False,
+                'is_active': False,
+            }
+
+            if obj.date > date.today():
+                cols['is_delete']= True
+            elif obj.date <= date.today():
+                last_date_count += 1
+                if last_date_count == 1:
+                    cols['is_active'] = True
+            rows.append(cols)
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
