@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="index_page" name="Home Page">
+        <t t-call="gmot_master.master_layouts">
+            <xpath expr="//t[@t-raw='0']" position="replace">
+                <h1>Hello</h1>
+            </xpath>
+            <xpath expr="//t[@t-raw='1']" position="replace">
+                <script>
+                    alert('Hello World');
+                </script>
+            </xpath>
+        </t>
+    </template>
+</odoo>

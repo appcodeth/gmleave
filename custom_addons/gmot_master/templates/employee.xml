@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="employee_page" name="Employee Page">
+        <t t-call="gmot_master.master_layouts">
+            <xpath expr="//t[@t-raw='0']" position="replace">
+            </xpath>
+            <xpath expr="//t[@t-raw='1']" position="replace">
+                <script>
+                </script>
+            </xpath>
+        </t>
+    </template>
+</odoo>

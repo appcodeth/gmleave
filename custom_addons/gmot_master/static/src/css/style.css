@@ -1,0 +1,92 @@
+body {
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+}
+
+.navbar-dark {
+    height: 50px;
+}
+
+.navbar-dark.bg-blue {
+    background-color: #008DCA;
+    border-bottom: 1px solid #444;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-dark .navbar-brand {
+    margin-right: 40px;
+}
+
+#wrapper {
+    position: relative;
+}
+
+#sidebar {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    width: 240px;
+    background-color: #333;
+}
+
+.sidemenu {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidemenu li {
+    margin: 0;
+}
+
+.sidemenu li img {
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.sidemenu li>a {
+    display: block;
+    padding: 10px 15px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.sidemenu li:hover>a {
+    background-color: #444;
+}
+
+#content {
+    position: fixed;
+    top: 50px;
+    left: 220px;
+    right: 0;
+    bottom: 0;
+    background-color: #ecf0f1;
+    overflow-y: auto;
+}
+
+.table .row-active {
+    background-color: #fafab3;
+}
+
+.table .row-active .fa {
+    color: #28a745;
+}
+
+.daterange-picker {
+    padding: 4px 10px;
+    color: #495057;
+    font-size: .875rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.highcharts-credits {
+    display: none;
+    visibility: hidden;
+}
