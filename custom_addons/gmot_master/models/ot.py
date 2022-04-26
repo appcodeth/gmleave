@@ -20,6 +20,7 @@ class EmployeeSalary(models.Model):
 
 class OT(models.Model):
     _name = 'gmot.ot'
+    _order = 'date asc'
     date = fields.Date('Date')
     rate = fields.Float('Rate')
     ot_employee_line = fields.One2many('gmot.ot_employee', 'ot_id', string='OT Employee Line')

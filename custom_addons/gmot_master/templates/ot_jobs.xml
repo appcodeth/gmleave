@@ -4,15 +4,15 @@
         <t t-call="gmot_master.master_layouts">
             <t t-set="head">
                 <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
-                    <h2 class="my-4">OT Jobs</h2>
-                    <h5>Name: [<span t-esc="employee.code"></span>]
+                    <h2 class="mt-4">OT Jobs</h2>
+                    <h5 class="mb-4">Name: [<span t-esc="employee.code"></span>]
                         <span t-esc="employee.name"></span>
                     </h5>
                     <hr/>
                     <div class="card border-0 shadow-sm mb-5">
                         <div class="card-body">
                             <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
-                            <div class="mb-4">
+                            <div class="mb-4" ng-if="ot_open_list.length">
                                 <a href="#" class="btn btn-success" ng-click="saveOTEmployee()">Save</a>
                                 <a href="#" class="btn btn-danger" ng-click="init()">Cancel</a>
                             </div>
@@ -26,7 +26,8 @@
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="ot-open" role="tabpanel" aria-labelledby="ot-open-tab">
-                                    <table class="table table-bordered my-5">
+                                    <strong ng-if="!ot_open_list.length">No items found!</strong>
+                                    <table class="table table-bordered my-4" ng-if="ot_open_list.length">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
