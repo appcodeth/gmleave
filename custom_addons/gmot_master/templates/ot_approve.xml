@@ -2,13 +2,51 @@
 <odoo>
     <template id="ot_approve_page" name="OT Approve Page">
         <t t-call="gmot_master.master_layouts">
-            <xpath expr="//t[@t-raw='0']" position="replace">
-                <h1>OT Approve</h1>
-            </xpath>
-            <xpath expr="//t[@t-raw='1']" position="replace">
-                <script>
-                </script>
-            </xpath>
+            <t t-set="head">
+                <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
+                    <h2 class="my-4">OT Approve</h2>
+                    <div class="card border-0 shadow-sm mb-5">
+                        <div class="card-body">
+                            <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Department</th>
+                                        <th>Total</th>
+                                        <th>Current</th>
+                                        <th>Approve</th>
+                                        <th>History</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="p in ot_approve_list">
+                                        <td>@{p.code}</td>
+                                        <td>@{p.name}</td>
+                                        <td>@{p.position}</td>
+                                        <td>@{p.department}</td>
+                                        <td>@{p.cumulative_amount|number:decimal_digits}</td>
+                                        <td>@{p.total_amount|number:decimal_digits}</td>
+                                        <td>
+                                            <a href="#" ng-if="p.total_amount" ng-click="viewDetail(p)">View Detail</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-info" ng-click="viewHistory(p)">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-set="script">
+                <script src="/gmot_master/static/src/js/ot_approve.js"></script>
+            </t>
         </t>
     </template>
 </odoo>

@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="ot_history_page" name="OT History Page">
+    <template id="ot_approve_history_page" name="OT History Page">
         <t t-call="gmot_master.master_layouts">
-            <xpath expr="//t[@t-raw='0']" position="replace">
-                <h1>OT History</h1>
-            </xpath>
-            <xpath expr="//t[@t-raw='1']" position="replace">
-                <script>
-                </script>
-            </xpath>
+            <t t-set="head">
+                <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
+                    <h2 class="mt-4">OT Approve History</h2>
+                    <input type="hidden" id="emp_id" t-att-value="employee.id"/>
+                    <h5 class="mb-4">Name: [<span t-esc="employee.code"></span>]
+                        <span t-esc="employee.name"></span>
+                    </h5>
+                    <div class="card border-0 shadow-sm mb-5">
+                        <div class="card-header bg-transparent">
+                            <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
+                            <a href="/gmot/ot/approve/" class="btn btn-secondary">
+                                <i class="fa fa-chevron-left"></i>
+                                Back
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <t t-if="approve_date_list_length">
+                                <div class="form-inline">
+                                    <label for="">Approve Date :</label>
+                                    <select class="form-control" ng-model="approve_date" ng-change="filterByApproveDate()">
+                                        <option value="">- All -</option>
+                                        <t t-foreach="approve_date_list" t-as="item">
+                                            <option t-att-value="item">
+                                                <t t-esc="item"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <table class="table table-bordered my-5">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Date</th>
+                                            <th>Approve Date</th>
+                                            <th>OT</th>
+                                            <th>Working Hours</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="p in ot_history_list">
+                                            <td>@{$index + 1}</td>
+                                            <td>@{p.ot_date}</td>
+                                            <td>@{p.approve_date}</td>
+                                            <td>@{p.ot_rate}</td>
+                                            <td>@{p.hours}</td>
+                                            <td>@{p.amount|number:decimal_digits}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3">Total</th>
+                                            <th>@{ot_history_total_rate}</th>
+                                            <th>@{ot_history_total_hours}</th>
+                                            <th>@{ot_history_total_amount|number:decimal_digits}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </t>
+                            <t t-if="approve_date_list_length == 0">
+                                <strong>No data found!</strong>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-set="script">
+                <script src="/gmot_master/static/src/js/ot_approve_history.js"></script>
+            </t>
         </t>
     </template>
 </odoo>

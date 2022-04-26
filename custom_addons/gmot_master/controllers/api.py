@@ -12,10 +12,7 @@ class OTApi(http.Controller):
 
     @http.route('/api/employee/list/', type='http', auth='public')
     def get_employee_list(self, **kw):
-        # find active employee list
-        objects = request.env['gmleave.employee'].sudo().search([
-            ('is_active', '=', True)
-        ], order='code asc')
+        objects = request.env['gmleave.employee'].sudo().search([('is_active', '=', True)], order='code asc')
         rows = []
         for o in objects:
             rows.append({
@@ -32,10 +29,7 @@ class OTApi(http.Controller):
     @http.route('/api/employee/history/', type='http', auth='public')
     def get_employee_history(self, **kw):
         id = request.params.get('id')
-        # get employee salary list
-        objects = request.env['gmot.employee_salary'].sudo().search([
-            ('employee_id.id', '=', id)
-        ], order='date desc')
+        objects = request.env['gmot.employee_salary'].sudo().search([('employee_id.id', '=', id)], order='date desc')
         rows = []
         last_date_count = 0
         for obj in objects:
@@ -62,8 +56,6 @@ class OTApi(http.Controller):
         for r in rows:
             if r['effective_date'] and r['salary']:
                 eff_date = datetime.strptime(r['effective_date'], '%d/%m/%Y').strftime('%Y-%m-%d')
-
-                # find employee by id
                 employee = request.env['gmleave.employee'].sudo().search([('id', '=', r['id'])])
                 employee.write({
                     'effective_date': eff_date,
@@ -89,7 +81,6 @@ class OTApi(http.Controller):
     def delete_employee_history(self, **kw):
         id = request.params.get('id')
         emp_id = request.params.get('emp_id')
-        # delete employee salary
         request.env['gmot.employee_salary'].sudo().search([('id', '=', id)]).unlink()
 
         # find latest history and update them
@@ -109,10 +100,8 @@ class OTApi(http.Controller):
 
     @http.route('/api/ot/list/', type='http', auth='public')
     def ot_list(self, **kw):
-        # get all ot list
         objects = request.env['gmot.ot'].sudo().search([], order='date desc')
         rows = []
-        # get ot with assigned for related employee list
         for o in objects:
             emp_names = []
             for e in o.ot_employee_line:
@@ -146,8 +135,6 @@ class OTApi(http.Controller):
                 'rate': data['rate'] or 0
             })
             ot_id = result.id
-
-        # create an OT specify to employee (or 'open' an OT for employee)
         for e in data['employees']:
             request.env['gmot.ot_employee'].sudo().create({
                 'ot_id': ot_id,
@@ -158,13 +145,10 @@ class OTApi(http.Controller):
     @http.route('/api/ot/delete/', type='http', auth='public')
     def ot_delete(self, **kw):
         id = request.params.get('id')
-
-        # check an OT is approved?
         count_status = request.env['gmot.ot_employee'].sudo().search_count([
             ('status', '=', 'approve'),
             ('ot_id.id', '=', id),
         ])
-        # can not delete when OT is approved
         if count_status:
             return Response(json.dumps({'ok': False, 'msg': 'Can not delete because OT is approved!'}), content_type='application/json')
         request.env['gmot.ot'].sudo().search([('id', '=', id)]).unlink()
@@ -174,7 +158,6 @@ class OTApi(http.Controller):
     @http.route('/api/ot/get/', type='http', auth='public')
     def ot_get(self, **kw):
         id = request.params.get('id')
-        # get it and related employee ids list
         obj = request.env['gmot.ot'].sudo().search([('id', '=', id)])
         emp_ids = []
         for e in obj.ot_employee_line:
@@ -189,7 +172,6 @@ class OTApi(http.Controller):
 
     @http.route('/api/ot/employee/list/', type='http', auth='public')
     def ot_employee_list(self, **kw):
-        # get base salary
         emp = request.env['gmleave.employee'].sudo().search([('id', '=', EMPLOYEE_ID)])
         eff_date = emp.effective_date
         eff_salary = emp.salary
@@ -205,21 +187,17 @@ class OTApi(http.Controller):
                     eff_date = obj.date
                     eff_salary = obj.salary
                     break
-        # if we are not found salary of employee
+
         if not eff_salary:
             return Response(json.dumps({'ok': False, 'msg': 'Employee [ID {0}] have not config salary!'.format(EMPLOYEE_ID)}), content_type='application/json')
 
-        # get OT date specified by employee
-        objects = request.env['gmot.ot_employee'].sudo().search([
-            ('employee_id.id', '=', EMPLOYEE_ID),
-            ('status', '=', 'draft'),
-        ], order='ot_id.date desc')
+        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'draft')], order='ot_id')
         rows = []
         for o in objects:
             rows.append({
                 'id': o.id,
-                'ot_date': o.ot.date.strftime('%d/%m/%Y') if o.ot.date else '',
-                'ot_rate': o.ot.rate,
+                'ot_date': o.ot_id.date.strftime('%d/%m/%Y') if o.ot_id.date else '',
+                'ot_rate': o.ot_id.rate,
                 'salary_date': eff_date.strftime('%d/%m/%Y') if eff_date else '',
                 'salary': eff_salary,
                 'cfg_workday_per_month': CFG_WORKDAY_PER_MONTH,
@@ -245,25 +223,17 @@ class OTApi(http.Controller):
 
     @http.route('/api/ot/employee/history/', type='http', auth='public')
     def ot_employee_history(self, **kw):
-        # find approved OT for employee
-        objects = request.env['gmot.ot_employee'].sudo().search([
-            ('employeE_id.id', '=', EMPLOYEE_ID),
-            ('status', '=', 'approve'),
-        ], order='ot_id.date')
-
-        # if user want to filter more by approve date
+        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'approve')], order='ot_id')
         approve_date = request.params.get('approve_date')
         if approve_date:
-            objects = objects.search([
-                ('approve_date', '=', datetime.strptime(approve_date, '%d/%m/%Y').strftime('%Y-%m-%d'))
-            ], order='ot_id.date')
+            objects = objects.search([('approve_date', '=', datetime.strptime(approve_date, '%d/%m/%Y').strftime('%Y-%m-%d'))], order='ot_id')
 
         rows = []
         for o in objects:
             rows.append({
                 'id': o.id,
-                'ot_date': o.ot.date.strftime('%d/%m/%Y') if o.ot.date else '',
-                'ot_rate': o.ot.rate,
+                'ot_date': o.ot_id.date.strftime('%d/%m/%Y') if o.ot_id.date else '',
+                'ot_rate': o.ot_id.rate,
                 'salary_date': o.salary_date.strftime('%d/%m/%Y') if o.salary_date else '',
                 'salary': o.salary,
                 'cfg_workday_per_month': o.cfg_workday_per_month,
@@ -281,18 +251,21 @@ class OTApi(http.Controller):
                     e.id,
                     e.code,
                     e.name,
-                    e.position,
-                    e.department,
+                    p.name as position,
+                    d.name as department,
                     (select sum(ot.amount) from gmot_ot_employee ot where ot.employee_id=e.id and ot.status='draft') as total_amount,
                     (select sum(ot.amount) from gmot_ot_employee ot where ot.employee_id=e.id and ot.status='approve') as cumulative_amount
-                from gmleave_employee e
-                where e.is_active='1'
-                order by e.code asc
+                from
+                    gmleave_employee e
+                        left join gmleave_position p on e.position_id=p.id
+                        left join gmleave_department d on e.department_id=d.id
+                where e.is_active=true
+                order by e.code asc, total_amount desc
             """
         rows = []
         request.cr.execute(sql)
         results = request.cr.fetchall()
-        for o in objects:
+        for o in results:
             rows.append({
                 'id': o[0],
                 'code': o[1],
@@ -307,18 +280,13 @@ class OTApi(http.Controller):
     @http.route('/api/ot/approve/draft/list/', type='http', auth='public')
     def ot_approve_draft_list(self, **kw):
         emp_id = request.params.get('emp_id')
-        # find list of OT by 'draft' status of employee
-        objects = request.env['gmot.ot_employee'].sudo().search([
-            ('employee_id.id', '=', emp_id),
-            ('status', '=', 'draft'),
-            ('amount', '>', 0),
-        ], order='ot_id.date asc')
+        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'draft'), ('amount', '>', 0)], order='ot_id')
         rows = []
         for o in objects:
             rows.append({
                 'id': o.id,
-                'ot_date': o.ot.date.strftime('%d/%m/%Y') if o.ot.date else '',
-                'ot_rate': o.ot.rate,
+                'ot_date': o.ot_id.date.strftime('%d/%m/%Y') if o.ot_id.date else '',
+                'ot_rate': o.ot_id.rate,
                 'salary_date': o.salary_date.strftime('%d/%m/%Y') if o.salary_date else '',
                 'salary': o.salary,
                 'cfg_workday_per_month': o.cfg_workday_per_month,
@@ -332,17 +300,13 @@ class OTApi(http.Controller):
     @http.route('/api/ot/approve/history/list/', type='http', auth='public')
     def ot_approve_history_list(self, **kw):
         emp_id = request.params.get('emp_id')
-        # find approved OT of employee
-        objects = request.env['gmot.ot_employee'].sudo().search([
-            ('employee_id.id', '=', emp_id),
-            ('status', '=', 'approve'),
-        ], order='ot_id.date asc')
+        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'approve')], order='ot_id')
         rows = []
         for o in objects:
             rows.append({
                 'id': o.id,
-                'ot_date': o.ot.date.strftime('%d/%m/%Y') if o.ot.date else '',
-                'ot_rate': o.ot.rate,
+                'ot_date': o.ot_id.date.strftime('%d/%m/%Y') if o.ot_id.date else '',
+                'ot_rate': o.ot_id.rate,
                 'salary_date': o.salary_date.strftime('%d/%m/%Y') if o.salary_date else '',
                 'salary': o.salary,
                 'cfg_workday_per_month': o.cfg_workday_per_month,
@@ -356,12 +320,7 @@ class OTApi(http.Controller):
     @http.route('/api/ot/approve/confirm/', type='http', auth='public')
     def ot_approve_confirm(self, **kw):
         emp_id = request.params.get('emp_id')
-        # approve OT by employee
-        objects = request.env['gmot.ot_employee'].sudo().search([
-            ('employee_id.id', '=', emp_id),
-            ('status', '=', 'draft'),
-            ('amount', '>', 0),
-        ], order='ot_id.date asc')
+        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'draft'), ('amount', '>', 0)], order='ot_id')
         for obj in objects:
             obj.write({
                 'approve_date': datetime.today(),
