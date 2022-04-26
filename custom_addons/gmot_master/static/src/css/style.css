@@ -31,6 +31,11 @@ body {
     border-color: #008dca;
 }
 
+.ms-options-wrap > button:focus, .ms-options-wrap > button {
+    width: 640px;
+    overflow: hidden;
+}
+
 .input-group > .input-group-append > .btn,
 .input-group > .input-group-append > .input-group-text,
 .input-group > .input-group-prepend:first-child > .btn:not(:first-child),

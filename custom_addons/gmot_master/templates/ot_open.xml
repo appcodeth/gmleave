@@ -2,13 +2,93 @@
 <odoo>
     <template id="ot_open_page" name="OT Open Page">
         <t t-call="gmot_master.master_layouts">
-            <xpath expr="//t[@t-raw='0']" position="replace">
-                <h1>OT Open</h1>
-            </xpath>
-            <xpath expr="//t[@t-raw='1']" position="replace">
-                <script>
-                </script>
-            </xpath>
+            <t t-set="head">
+                <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
+                    <input type="hidden" id="ot_id"/>
+                    <div class="modal fade" id="otModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="otModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="otModalLabel">Add OT</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&amp;times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th style="width:120px">Date</th>
+                                            <td>
+                                                <div class="datepicker date input-group">
+                                                    <input type="text" class="form-control" id="ot_date"/>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-clock"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Rate</th>
+                                            <td>
+                                                <input type="text" class="form-control" id="ot_rate"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Employee</th>
+                                            <td>
+                                                <select id="ot_employee" name="employees[]" multiple="">
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" ng-click="saveOT()">Save changes</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ./modals -->
+                    <h2 class="my-4">OT Open</h2>
+                    <div class="card border-0 shadow-sm mb-5">
+                        <div class="card-header bg-transparent">
+                            <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
+                            <a href="#" class="btn btn-success" ng-click="addOTModal()">Add OT</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Rate</th>
+                                        <th>Employee</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="p in ot_list">
+                                        <td>@{p.date}</td>
+                                        <td>@{p.rate}</td>
+                                        <td>@{p.emp_strs}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary" ng-click="editOT(p.id)">Edit</a>
+                                            <a href="#" class="btn btn-danger" ng-click="deleteOT(p.id)">Delete</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-set="script">
+                <script src="/gmot_master/static/src/js/ot_open.js"></script>
+            </t>
         </t>
     </template>
 </odoo>
