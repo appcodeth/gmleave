@@ -65,6 +65,12 @@ app.factory('factory', function($http) {
     return factory;
 });
 
+function isValidDate(date) {
+    var temp = date.split('/');
+    var d = new Date(temp[1] + '/' + temp[0] + '/' + temp[2]);
+    return (d && (d.getMonth() + 1) == temp[1] && d.getDate() == Number(temp[0]) && d.getFullYear() == Number(temp[2]));
+}
+
 app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.employee_list = [];
     $scope.employee_history_list = [];
@@ -78,9 +84,40 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     };
 
     $scope.saveEmployee = function() {
+        // validate before save
+        var err = '';
+        angular.forEach($scope.employee_list, function(item) {
+            if(item.effective_date && !err) {
+                var result = isValidDate(item.effective_date);
+                if(!result) {
+                    err = 'Please enter a correct date!\n';
+                }
+
+                result = !/^\s*$/.test(item.salary) && !isNaN(item.salary);
+                if(!result) {
+                    err = 'Please enter a correct salary!\n';
+                }
+            }
+        });
+
+        if(err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Data',
+                text: err,
+            });
+            return;
+        }
+
         factory.saveEmployee($scope.employee_list).then(function(res) {
             if (res.data.result.ok) {
-                alert('Save completed');
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: 'Save completed',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
                 $scope.getEmployeeList();
             }
         });

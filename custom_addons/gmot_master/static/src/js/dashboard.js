@@ -1,5 +1,4 @@
 $(function() {
-
     var g_start_1 = moment().startOf('year');
     var g_end_1 = moment().endOf('year');
 

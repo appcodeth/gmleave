@@ -15,6 +15,7 @@
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/multiselect/multi-select.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/toastr/toastr.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/busy/angular-busy.min.css"/>
+                <link rel="stylesheet" href="/gmot_master/static/src/vendor/sweetalert/sweetalert2.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/css/style.css"/>
             </head>
             <body>
@@ -115,6 +116,7 @@
                 <script src="/gmot_master/static/src/vendor/busy/angular-busy.min.js"></script>
                 <script src="/gmot_master/static/src/vendor/toastr/toastr.min.js"></script>
                 <script src="/gmot_master/static/src/vendor/paging/paging.min.js"></script>
+                <script src="/gmot_master/static/src/vendor/sweetalert/sweetalert2.all.min.js"></script>
                 <t t-raw="script or ''"/>
             </body>
         </html>
