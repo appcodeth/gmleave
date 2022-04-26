@@ -2,13 +2,60 @@
 <odoo>
     <template id="index_page" name="Index Page">
         <t t-call="gmot_master.master_layouts">
-            <xpath expr="//t[@t-raw='0']" position="replace">
-                <h1>Dashboard</h1>
-            </xpath>
-            <xpath expr="//t[@t-raw='1']" position="replace">
-                <script>
-                </script>
-            </xpath>
+            <t t-set="head">
+                <div class="container-fluid">
+                    <h2 class="my-4">Dashboard</h2>
+                    <div class="card mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="float-right">
+                                <div class="form-inline">
+                                    <strong class="mr-2">Filter By :</strong>
+                                    <select id="filter1" class="form-control form-control-sm">
+                                        <option value="all">All Employee</option>
+                                        <option value="employee">Specify Employee</option>
+                                    </select>
+                                    <strong class="mx-2">Select Date :</strong>
+                                    <div id="daterange1" class="daterange-picker">
+                                        <i class="far fa-calendar mr-1"></i>
+                                        <span></span>
+                                        <i class="fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5>OT by Hours</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="bar-container1"></div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-bottom:100px">
+                        <div class="card-header bg-transparent">
+                            <div class="float-right">
+                                <div class="form-inline">
+                                    <strong class="mr-2">Filter By :</strong>
+                                    <select id="filter2" class="form-control form-control-sm">
+                                        <option value="all">All Employee</option>
+                                        <option value="employee">Specify Employee</option>
+                                    </select>
+                                    <strong class="mx-2">Select Date :</strong>
+                                    <div id="daterange2" class="daterange-picker">
+                                        <i class="far fa-calendar mr-1"></i>
+                                        <span></span>
+                                        <i class="fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5>OT by Amount</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="bar-container2"></div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-set="script">
+                <script src="/gmot_master/static/src/js/dashboard.js"></script>
+            </t>
         </t>
     </template>
 </odoo>

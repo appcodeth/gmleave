@@ -351,7 +351,7 @@ class OTApi(http.Controller):
         rows = []
         request.cr.execute(sql)
         results = request.cr.fetchall()
-        for o in objects:
+        for o in results:
             rows.append({
                 'name': 'All Employee',
                 'data': [o[i] for i in range(0, 12)]
@@ -385,7 +385,7 @@ class OTApi(http.Controller):
         rows = []
         request.cr.execute(sql)
         results = request.cr.fetchall()
-        for o in objects:
+        for o in results:
             rows.append({
                 'name': o[1],
                 'data': [o[i] for i in range(2, 14)]
@@ -415,7 +415,7 @@ class OTApi(http.Controller):
         rows = []
         request.cr.execute(sql)
         results = request.cr.fetchall()
-        for o in objects:
+        for o in results:
             rows.append({
                 'name': 'All Employee',
                 'data': [o[i] for i in range(0, 12)]
@@ -449,7 +449,7 @@ class OTApi(http.Controller):
         rows = []
         request.cr.execute(sql)
         results = request.cr.fetchall()
-        for o in objects:
+        for o in results:
             rows.append({
                 'name': o[1],
                 'data': [o[i] for i in range(2, 14)]
