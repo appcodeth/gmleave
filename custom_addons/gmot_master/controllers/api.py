@@ -4,12 +4,17 @@ from datetime import datetime, date, timedelta
 from odoo import http
 from odoo.http import request, Response
 
-EMPLOYEE_ID = 1
 CFG_WORKDAY_PER_MONTH = 30
 CFG_WORKHOUR_PER_DAY = 8
 
 
 class OTApi(http.Controller):
+    def get_employee_id(self):
+        login_id = request.env.user.id
+        employee = request.env['gmleave.employee'].sudo().search([('user_id', '=', login_id)])
+        if not employee:
+            employee = request.env['gmleave.employee'].sudo().search([('name', '=', request.env.user.name)])
+        return employee.id
 
     @http.route('/api/employee/list/', type='http', auth='public')
     def get_employee_list(self, **kw):
@@ -193,6 +198,7 @@ class OTApi(http.Controller):
 
     @http.route('/api/ot/employee/list/', type='http', auth='public')
     def ot_employee_list(self, **kw):
+        EMPLOYEE_ID = self.get_employee_id()
         emp = request.env['gmleave.employee'].sudo().search([('id', '=', EMPLOYEE_ID)])
         eff_date = emp.effective_date
         eff_salary = emp.salary
@@ -244,11 +250,12 @@ class OTApi(http.Controller):
 
     @http.route('/api/ot/employee/history/', type='http', auth='public')
     def ot_employee_history(self, **kw):
-        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'approve')], order='ot_id')
+        EMPLOYEE_ID = self.get_employee_id()
+        context = [('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'approve')]
         approve_date = request.params.get('approve_date')
         if approve_date:
-            objects = objects.search([('approve_date', '=', datetime.strptime(approve_date, '%d/%m/%Y').strftime('%Y-%m-%d'))], order='ot_id')
-
+            context.append(('approve_date', '=', datetime.strptime(approve_date, '%d/%m/%Y').strftime('%Y-%m-%d')))
+        objects = request.env['gmot.ot_employee'].sudo().search(context, order='ot_id')
         rows = []
         for o in objects:
             rows.append({
@@ -321,7 +328,12 @@ class OTApi(http.Controller):
     @http.route('/api/ot/approve/history/list/', type='http', auth='public')
     def ot_approve_history_list(self, **kw):
         emp_id = request.params.get('emp_id')
-        objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'approve')], order='ot_id')
+        context = [('employee_id.id', '=', emp_id), ('status', '=', 'approve')]
+        approve_date = request.params.get('approve_date')
+        if approve_date:
+            context.append(('approve_date', '=', datetime.strptime(approve_date, '%d/%m/%Y').strftime('%Y-%m-%d')))
+        objects = request.env['gmot.ot_employee'].sudo().search(context, order='ot_id')
+
         rows = []
         for o in objects:
             rows.append({

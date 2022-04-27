@@ -19,6 +19,7 @@
                 <link rel="stylesheet" href="/gmot_master/static/src/css/style.css"/>
             </head>
             <body>
+                <t t-set="image_url" t-value="'http://localhost:8069/web/image?model=res.users&amp;field=image_128&amp;id=' + str(request.env.user.id)"></t>
                 <nav class="navbar navbar-expand-md navbar-dark bg-blue">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="#">OT</a>
@@ -33,19 +34,20 @@
                             </ul>
                             <ul class="navbar-nav ml-auto">
                                 <li>
-                                    <a href="#" class="btn btn-warning btn-sm my-1 mr-4">
+                                    <a href="/web" class="btn btn-warning btn-sm my-1 mr-4">
                                         <i class="fa fa-home"></i>
                                         Home
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ekkasit</a>
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img t-att-src="image_url" width="24px" height="24px" class="rounded-circle"/>
+                                        <t t-esc="request.env.user.name"/>
+                                    </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="nav-item nav-link dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="#" width="40px" height="40px" class="rounded-circle"/>
-                                            <span class="caret"></span>
+                                        <a class="dropdown-item" href="/web/session/logout?redirect=/web">
+                                            Log out
                                         </a>
-                                        <a class="dropdown-item" href="#">Log out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -61,13 +63,13 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <li t-attf-class="{{ 'active' if menu == 'salary' else '' }}">
+                            <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'salary' else '' }}">
                                 <a href="/gmot/salary/">
                                     <img src="/gmot_master/static/src/img/icon/app2.png" alt=""/>
                                     Salary
                                 </a>
                             </li>
-                            <li t-attf-class="{{ 'active' if menu == 'ot_open' else '' }}">
+                            <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_open' else '' }}">
                                 <a href="/gmot/ot/open/">
                                     <img src="/gmot_master/static/src/img/icon/app3.png" alt=""/>
                                     OT Open
@@ -79,13 +81,13 @@
                                     OT Jobs
                                 </a>
                             </li>
-                            <li t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">
+                            <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">
                                 <a href="/gmot/ot/approve/">
                                     <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
                                     OT Approve
                                 </a>
                             </li>
-                            <li t-attf-class="{{ 'active' if menu == 'config' else '' }}">
+                            <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'config' else '' }}">
                                 <a href="/gmot/config/">
                                     <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
                                     OT Config

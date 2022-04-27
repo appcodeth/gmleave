@@ -7,6 +7,7 @@
     'category': 'Custom',
     'depends': ['base', 'gmleave_master'],
     'data': [
+        'security/security.xml',
         'templates/layouts.xml',
         'templates/index.xml',
         'templates/report.xml',

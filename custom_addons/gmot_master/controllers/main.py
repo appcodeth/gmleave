@@ -1,16 +1,23 @@
 import json
-from odoo import http
+from odoo import http, SUPERUSER_ID
 from odoo.http import request, Response
 from werkzeug import utils
 
-EMPLOYEE_ID = 1
 CFG_WORKDAY_PER_MONTH = 30
 CFG_WORKHOUR_PER_DAY = 8
 
 
 class MainController(http.Controller):
+    def get_employee_id(self):
+        login_id = request.env.user.id
+        employee = request.env['gmleave.employee'].sudo().search([('user_id', '=', login_id)])
+        if not employee:
+            employee = request.env['gmleave.employee'].sudo().search([('name', '=', request.env.user.name)])
+        return employee.id
+
     @http.route('/gmot/', type='http', auth='public', website=True)
     def index(self, **kwargs):
+        print('index function')
         return request.render('gmot_master.index_page', {
             'menu': 'index',
         })
@@ -41,6 +48,7 @@ class MainController(http.Controller):
 
     @http.route('/gmot/ot/jobs/', type='http', auth='public', website=True)
     def ot_jobs(self, **kwargs):
+        EMPLOYEE_ID = self.get_employee_id()
         employee = request.env['gmleave.employee'].sudo().search([('id', '=', EMPLOYEE_ID)])
         approve_date_list = []
         rows = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'approve')], order='approve_date')
