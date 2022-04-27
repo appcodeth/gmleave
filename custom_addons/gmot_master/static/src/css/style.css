@@ -2,15 +2,33 @@
     display: none !important;
 }
 
+@font-face {
+    font-family: Roboto;
+    src: url(/gmot_master/static/src/font/Roboto-Regular.ttf)
+}
+
 html,body {
     height: 100%;
 }
 
 body {
+    overflow: hidden;
+    color: #444;
     font-size: 14px;
     font-family: "Roboto", sans-serif;
     background-color: #ecf0f1;
-    overflow: hidden;
+}
+
+.table {
+    color: #444;
+}
+
+.table thead a {
+    color: #444;
+}
+
+.table thead .fa {
+    margin-left: 4px;
 }
 
 .btn {
@@ -54,8 +72,8 @@ body {
 }
 
 .navbar-dark.bg-blue {
-    background-color: #008dca;
-    border-bottom: 1px solid #444;
+    background-color: #243742;
+    border-bottom: 1px solid #121c21;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -63,7 +81,10 @@ body {
 }
 
 .navbar-dark .navbar-brand {
-    margin-right: 40px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 46px;
+    margin-right: 20px;
 }
 
 #wrapper {
@@ -76,7 +97,7 @@ body {
     top: 50px;
     bottom: 0;
     width: 220px;
-    background-color: #333;
+    background-color: #121c21;
 }
 
 .sidemenu {
@@ -99,16 +120,18 @@ body {
 .sidemenu li>a {
     display: block;
     padding: 10px 15px;
-    color: #ddd;
+    color: #dee2e6;
     text-decoration: none;
+    font-weight: 300;
 }
 
 .sidemenu li.active>a {
-    background-color: #444 !important;
+    color: #fff !important;
+    background-color: #5d8da8 !important;
 }
 
 .sidemenu li:hover>a {
-    background-color: #444;
+    background-color: #213038;
 }
 
 #content {
