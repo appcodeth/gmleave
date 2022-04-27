@@ -1,4 +1,5 @@
 import json
+from math import ceil
 from datetime import datetime, date, timedelta
 from odoo import http
 from odoo.http import request, Response
@@ -100,7 +101,21 @@ class OTApi(http.Controller):
 
     @http.route('/api/ot/list/', type='http', auth='public')
     def ot_list(self, **kw):
-        objects = request.env['gmot.ot'].sudo().search([], order='date desc')
+        rp = int(request.params.get('rp') or '2')
+        page = int(request.params.get('page') or '1')
+        sort = request.params.get('sort') or ''
+        desc = request.params.get('desc') or ''
+
+        total = request.env['gmot.ot'].sudo().search_count([])
+        total_pages = int(ceil(float(total) / rp))
+        results = page * rp
+        page_count = results if results <= total else total
+
+        sort_by = 'date'
+        if sort:
+            sort_by = sort + ' ' + ('desc' if desc == 'true' else 'asc')
+        objects = request.env['gmot.ot'].sudo().search([], limit=rp, offset=(page - 1) * rp, order=sort_by)
+
         rows = []
         for o in objects:
             emp_names = []
@@ -114,7 +129,13 @@ class OTApi(http.Controller):
                 'emp_strs': ', '.join(emp_names),
             })
 
-        return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
+        return Response(json.dumps({
+            'ok': True,
+            'rows': rows,
+            'total': total,
+            'total_pages': total_pages,
+            'page_count': page_count,
+        }), content_type='application/json')
 
     @http.route('/api/ot/save/', methods=['POST'], csrf=False, type='json', auth='public')
     def ot_save(self, **kw):

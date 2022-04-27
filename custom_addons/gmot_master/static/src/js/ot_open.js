@@ -1,12 +1,12 @@
-var app = angular.module('app', ['cgBusy']).config(function($interpolateProvider) {
+var app = angular.module('app', ['cgBusy', 'bw.paging', 'sorted']).config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('@{').endSymbol('}');
 });
 
 app.factory('factory', function($http) {
     var factory = {};
 
-    factory.getOTList = function() {
-        return $http.get('/api/ot/list/');
+    factory.getOTList = function(page, rp, sort, desc) {
+        return $http.get('/api/ot/list/?page=' + page + '&rp=' + rp + '&sort=' + sort + '&desc=' + desc);
     };
 
     factory.saveOT = function(data) {
@@ -31,11 +31,22 @@ app.factory('factory', function($http) {
 
 app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.ot_list = [];
+    $scope.page = 1;
+    $scope.rp = 5;
+
+    $scope.sortBy = function (ord) {
+        $scope.desc = ($scope.sort === ord) ? !$scope.desc : true;
+        $scope.sort = ord;
+        $scope.getOTList();
+    };
 
     $scope.getOTList = function() {
-        $scope.myPromise = factory.getOTList();
+        $scope.myPromise = factory.getOTList($scope.page, $scope.rp, $scope.sort, $scope.desc);
         $scope.myPromise.then(function(res) {
             $scope.ot_list = res.data.rows;
+            $scope.total = res.data.total;
+            $scope.pageCount = res.data.page_count;
+            $scope.totalPages = res.data.total_pages;
         });
     };
 
@@ -65,8 +76,14 @@ app.controller('ctrl', function($scope, $timeout, factory) {
         factory.saveOT(data).then(function(res) {
             if (res.data.result.ok) {
                 $('#otModal').modal('hide');
-                alert('Save completed');
-                $scope.getOTList();
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: 'Save completed',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                $scope.init();
             }
         });
     };
@@ -96,17 +113,39 @@ app.controller('ctrl', function($scope, $timeout, factory) {
         if (!confirm('Confirm delete OT?')) {
             return;
         }
+
         factory.deleteOT(id).then(function(res) {
             if (!res.data.ok) {
-                alert(res.data.msg);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Alert',
+                    text: res.data.msg,
+                });
                 return;
             }
-            alert('Delete success');
+            Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: 'Delete success',
+              showConfirmButton: false,
+              timer: 1500
+            });
             $scope.getOTList();
         });
     };
 
+    $scope.setPage = function (e, page) {
+        $scope.page = page;
+        if (page) {
+            $scope.getOTList();
+        }
+    };
+
     $scope.init = function() {
+        $scope.sort = 'date';
+        $scope.desc = true;
+        $scope.search = {};
+        $scope.page = 1;
         $scope.getOTList();
     };
 

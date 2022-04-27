@@ -63,8 +63,8 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Rate</th>
+                                        <th sorted="date">Date</th>
+                                        <th sorted="rate">Rate</th>
                                         <th>Employee</th>
                                         <th></th>
                                     </tr>
@@ -82,11 +82,18 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="card-footer bg-transparent" ng-if="pageCount">
+                            <div class="float-right">
+                                <div paging="" page="page" page-size="rp" total="total" scroll-top="true" hide-if-empty="true" show-prev-next="true" show-first-last="true" paging-action="setPage('page', page)"></div>
+                            </div>
+                            <div class="result">Displaying @{(((page || 1) - 1) * rp) + 1} - @{pageCount} of @{total} entries</div>
+                        </div>
                     </div>
                 </div>
             </t>
 
             <t t-set="script">
+                <script src="/gmot_master/static/src/js/sorted.js"></script>
                 <script src="/gmot_master/static/src/js/ot_open.js"></script>
             </t>
         </t>
