@@ -15,7 +15,7 @@ body {
     overflow: hidden;
     color: #444;
     font-size: 14px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Prompt", sans-serif;
     background-color: #ecf0f1;
 }
 
@@ -72,8 +72,12 @@ body {
 }
 
 .navbar-dark.bg-blue {
+/*
     background-color: #243742;
     border-bottom: 1px solid #121c21;
+*/
+    background-color: #008dca;
+    border-bottom: 1px solid #444;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -117,6 +121,7 @@ body {
     margin-right: 10px;
 }
 
+/*
 .sidemenu li>a {
     display: block;
     padding: 10px 15px;
@@ -132,6 +137,22 @@ body {
 
 .sidemenu li:hover>a {
     background-color: #213038;
+}
+*/
+.sidemenu li > a {
+    display: block;
+    padding: 10px 15px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.sidemenu li:hover > a {
+    background-color: #444;
+}
+
+.sidemenu li.active > a {
+    color: #fff !important;
+    background-color: #444 !important;
 }
 
 #content {
