@@ -57,9 +57,39 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     };
 
     $scope.saveOTEmployee = function() {
+        var err = '';
+        angular.forEach($scope.ot_open_list, function(item) {
+            var result = !/^\s*$/.test(item.hours) && !isNaN(item.hours);
+            if(!result) {
+                err = 'กรุณากรอกชั่วโมงทำงานให้ถูกต้อง!\n';
+            }
+
+            if(result) {
+                hr = parseInt(item.hours, 10);
+                if(hr <= 0 || hr > 100) {
+                    err = 'กรุณากรอกชั่วโมงทำงานให้ถูกต้อง!\n';
+                }
+            }
+        });
+
+        if(err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'ข้อมูลไม่ถูกต้อง',
+                text: err,
+            });
+            return;
+        }
+
         factory.saveOTEmployee($scope.ot_open_list).then(function(res) {
             if (res.data.result.ok) {
-                alert('Save completed');
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: 'บันทึกข้อมูลแล้ว',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
                 $scope.init();
             }
         });

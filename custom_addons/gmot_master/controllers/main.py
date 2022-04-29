@@ -17,11 +17,12 @@ class MainController(http.Controller):
 
     @http.route('/gmot/', type='http', auth='public', website=True)
     def index(self, **kwargs):
-        print('index function')
-        return request.render('gmot_master.index_page', {
-            'menu': 'index',
-            'title': 'ภาพรวม',
-        })
+        if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
+            return request.render('gmot_master.index_page', {
+                'menu': 'index',
+                'title': 'ภาพรวม',
+            })
+        return utils.redirect('/gmot/ot/jobs/')
 
     @http.route('/gmot/salary/', type='http', auth='public', website=True)
     def salary(self, **kwargs):
