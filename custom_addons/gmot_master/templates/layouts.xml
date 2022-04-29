@@ -81,7 +81,7 @@
                             <li t-attf-class="{{ 'active' if menu == 'ot_jobs' else '' }}">
                                 <a href="/gmot/ot/jobs/">
                                     <img src="/gmot_master/static/src/img/icon/app4.png" alt=""/>
-                                    เปิดงาน OT
+                                    ลงเวลา OT
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">

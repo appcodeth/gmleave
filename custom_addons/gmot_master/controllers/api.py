@@ -216,7 +216,7 @@ class OTApi(http.Controller):
                     break
 
         if not eff_salary:
-            return Response(json.dumps({'ok': False, 'msg': 'พนักงาน [ID {0}] ยังไม่ได้กำหนดข้อมูลเงินเดือน!'.format(EMPLOYEE_ID)}), content_type='application/json')
+            return Response(json.dumps({'ok': False, 'msg': 'พนักงาน [{0}] ยังไม่ได้กำหนดข้อมูลเงินเดือน!'.format(emp.code)}), content_type='application/json')
 
         objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'draft')], order='ot_id')
         rows = []

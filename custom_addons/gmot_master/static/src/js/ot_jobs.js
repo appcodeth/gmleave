@@ -39,7 +39,11 @@ app.controller('ctrl', function($scope, $timeout, factory) {
         $scope.myPromise = factory.getOTEmployeeList();
         $scope.myPromise.then(function(res) {
             if (!res.data.ok) {
-                alert(res.data.msg);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดความผิดพลาด',
+                    text: res.data.msg,
+                });
                 return;
             }
             $scope.ot_open_list = res.data.rows;

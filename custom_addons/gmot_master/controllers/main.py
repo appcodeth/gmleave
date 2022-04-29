@@ -48,7 +48,7 @@ class MainController(http.Controller):
     def ot_open(self, **kwargs):
         return request.render('gmot_master.ot_open_page', {
             'menu': 'ot_open',
-            'title': 'OT Open',
+            'title': 'เปิดงาน OT',
         })
 
     @http.route('/gmot/ot/jobs/', type='http', auth='public', website=True)
