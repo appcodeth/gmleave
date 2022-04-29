@@ -4,17 +4,17 @@
         <t t-call="gmot_master.master_layouts">
             <t t-set="head">
                 <div class="container-fluid">
-                    <h2 class="my-4">Dashboard</h2>
+                    <h2 class="my-4">ภาพรวม</h2>
                     <div class="card mb-4">
                         <div class="card-header bg-transparent">
                             <div class="float-right">
                                 <div class="form-inline">
-                                    <strong class="mr-2">Filter By :</strong>
+                                    <strong class="mr-2">เลือกดู :</strong>
                                     <select id="filter1" class="form-control form-control-sm">
-                                        <option value="all">All Employee</option>
-                                        <option value="employee">Specify Employee</option>
+                                        <option value="all">ทั้งหมด</option>
+                                        <option value="employee">ตามพนักงาน</option>
                                     </select>
-                                    <strong class="mx-2">Select Date :</strong>
+                                    <strong class="mx-2">วันที่ :</strong>
                                     <div id="daterange1" class="daterange-picker">
                                         <i class="far fa-calendar mr-1"></i>
                                         <span></span>
@@ -22,7 +22,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5>OT by Hours</h5>
+                            <h5 class="my-1">จำนวนชั่วโมง OT</h5>
                         </div>
                         <div class="card-body">
                             <div id="bar-container1"></div>
@@ -32,12 +32,12 @@
                         <div class="card-header bg-transparent">
                             <div class="float-right">
                                 <div class="form-inline">
-                                    <strong class="mr-2">Filter By :</strong>
+                                    <strong class="mr-2">เลือกดู :</strong>
                                     <select id="filter2" class="form-control form-control-sm">
-                                        <option value="all">All Employee</option>
-                                        <option value="employee">Specify Employee</option>
+                                        <option value="all">ทั้งหมด</option>
+                                        <option value="employee">ตามพนักงาน</option>
                                     </select>
-                                    <strong class="mx-2">Select Date :</strong>
+                                    <strong class="mx-2">วันที่ :</strong>
                                     <div id="daterange2" class="daterange-picker">
                                         <i class="far fa-calendar mr-1"></i>
                                         <span></span>
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5>OT by Amount</h5>
+                            <h5 class="my-1">จำนวนเงิน OT</h5>
                         </div>
                         <div class="card-body">
                             <div id="bar-container2"></div>

@@ -20,14 +20,14 @@ class MainController(http.Controller):
         print('index function')
         return request.render('gmot_master.index_page', {
             'menu': 'index',
-            'title': 'Dashboard',
+            'title': 'ภาพรวม',
         })
 
     @http.route('/gmot/salary/', type='http', auth='public', website=True)
     def salary(self, **kwargs):
         return request.render('gmot_master.salary_page', {
             'menu': 'salary',
-            'title': 'Salary Configuration',
+            'title': 'เงินเดือน',
         })
 
     @http.route('/gmot/report/', type='http', auth='public', website=True)

@@ -75,6 +75,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.employee_list = [];
     $scope.employee_history_list = [];
     $scope.employee;
+    $scope.decimal_digits = 2;
 
     $scope.getEmployeeList = function() {
         $scope.myPromise = factory.getEmployeeList();
@@ -90,12 +91,12 @@ app.controller('ctrl', function($scope, $timeout, factory) {
             if(item.effective_date && !err) {
                 var result = isValidDate(item.effective_date);
                 if(!result) {
-                    err = 'Please enter a correct date!\n';
+                    err = 'กรุณากรอกวันที่ให้ถูกต้อง!\n';
                 }
 
                 result = !/^\s*$/.test(item.salary) && !isNaN(item.salary);
                 if(!result) {
-                    err = 'Please enter a correct salary!\n';
+                    err = 'กรุณากรอกเงินเดือนให้ถูกต้อง!\n';
                 }
             }
         });
@@ -103,7 +104,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
         if(err) {
             Swal.fire({
                 icon: 'error',
-                title: 'Invalid Data',
+                title: 'ข้อมูลไม่ถูกต้อง',
                 text: err,
             });
             return;
@@ -114,7 +115,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
                 Swal.fire({
                   position: 'top-center',
                   icon: 'success',
-                  title: 'Save completed',
+                  title: 'บันทึกข้อมูลแล้ว',
                   showConfirmButton: false,
                   timer: 1500
                 });
@@ -132,7 +133,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     };
 
     $scope.deleteEmployeeHistory = function(history_id) {
-        if (confirm('Delete this item?')) {
+        if (confirm('ยืนยันการลบข้อมูล ?')) {
             factory.deleteEmployeeHistory(history_id, $scope.employee.id).then(function(res) {
                 factory.getEmployeeHistory($scope.employee.id).then(function(hist) {
                     $scope.employee_history_list = hist.data.rows;

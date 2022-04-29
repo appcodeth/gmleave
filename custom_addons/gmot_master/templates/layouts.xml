@@ -16,7 +16,6 @@
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/toastr/toastr.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/busy/angular-busy.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/sweetalert/sweetalert2.min.css"/>
-                <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&amp;display=swap" rel="stylesheet"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/css/style.css"/>
             </head>
             <body>
@@ -30,14 +29,16 @@
                         <div class="collapse navbar-collapse" id="navbars">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" style="font-size:15px"><t t-esc="title"></t></a>
+                                    <a class="nav-link" href="#" style="font-size:15px">
+                                        <t t-esc="title"></t>
+                                    </a>
                                 </li>
                             </ul>
                             <ul class="navbar-nav ml-auto">
                                 <li>
                                     <a href="/web" class="btn btn-warning px-3 btn-sm my-1 mr-4">
                                         <i class="fa fa-home"></i>
-                                        Home
+                                        เมนูหลัก
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -47,7 +48,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="/web/session/logout?redirect=/web">
-                                            Log out
+                                            ออกจากระบบ
                                         </a>
                                     </div>
                                 </li>
@@ -61,25 +62,25 @@
                             <li t-attf-class="{{ 'active' if menu == 'index' else '' }}">
                                 <a href="/gmot/">
                                     <img src="/gmot_master/static/src/img/icon/app1.png" alt=""/>
-                                    Dashboard
+                                    แดชบอร์ด
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'salary' else '' }}">
                                 <a href="/gmot/salary/">
                                     <img src="/gmot_master/static/src/img/icon/app2.png" alt=""/>
-                                    Salary
+                                    เงินเดือน
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_open' else '' }}">
                                 <a href="/gmot/ot/open/">
                                     <img src="/gmot_master/static/src/img/icon/app3.png" alt=""/>
-                                    OT Open
+                                    เปิดงาน OT
                                 </a>
                             </li>
                             <li t-attf-class="{{ 'active' if menu == 'ot_jobs' else '' }}">
                                 <a href="/gmot/ot/jobs/">
                                     <img src="/gmot_master/static/src/img/icon/app4.png" alt=""/>
-                                    OT Jobs
+                                    เปิดงาน OT
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">

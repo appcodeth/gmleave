@@ -13,8 +13,8 @@ $(function() {
         startDate: g_start_1,
         endDate: g_end_1,
         ranges: {
-            'This Year': [moment().startOf('year'), moment().endOf('year')],
-            'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+            'ปีนี้': [moment().startOf('year'), moment().endOf('year')],
+            'ปีที่แล้ว': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
         }
     }, cb1);
     cb1(g_start_1, g_end_1);
@@ -41,30 +41,30 @@ $(function() {
                     },
                     xAxis: {
                         categories: [
-                            'Jan',
-                            'Feb',
-                            'Mar',
-                            'Apr',
-                            'May',
-                            'Jun',
-                            'Jul',
-                            'Aug',
-                            'Sep',
-                            'Oct',
-                            'Nov',
-                            'Dec',
+                            'ม.ค.',
+                            'ก.พ.',
+                            'มี.ค.',
+                            'เม.ย.',
+                            'พ.ค.',
+                            'มิ.ย.',
+                            'ก.ค.',
+                            'ส.ค.',
+                            'ก.ย.',
+                            'ต.ค.',
+                            'พ.ย.',
+                            'ธ.ค.',
                         ],
                         crosshair: true
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'OT (Hours)'
+                            text: 'OT (ชั่วโมง)'
                         }
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} Hours</b></td></tr>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} ชั่วโมง</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -106,30 +106,30 @@ $(function() {
                     },
                     xAxis: {
                         categories: [
-                            'Jan',
-                            'Feb',
-                            'Mar',
-                            'Apr',
-                            'May',
-                            'Jun',
-                            'Jul',
-                            'Aug',
-                            'Sep',
-                            'Oct',
-                            'Nov',
-                            'Dec',
+                            'ม.ค.',
+                            'ก.พ.',
+                            'มี.ค.',
+                            'เม.ย.',
+                            'พ.ค.',
+                            'มิ.ย.',
+                            'ก.ค.',
+                            'ส.ค.',
+                            'ก.ย.',
+                            'ต.ค.',
+                            'พ.ย.',
+                            'ธ.ค.',
                         ],
                         crosshair: true
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'OT (Hours)'
+                            text: 'OT (ชั่วโมง)'
                         }
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} Hours</b></td></tr>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} ชั่วโมง</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -176,8 +176,8 @@ $(function() {
         startDate: g_start_2,
         endDate: g_end_2,
         ranges: {
-            'This Year': [moment().startOf('year'), moment().endOf('year')],
-            'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+            'ปีนี้': [moment().startOf('year'), moment().endOf('year')],
+            'ปีที่แล้ว': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
         }
     }, cb2);
     cb2(g_start_2, g_end_2);
@@ -204,30 +204,30 @@ $(function() {
                     },
                     xAxis: {
                         categories: [
-                            'Jan',
-                            'Feb',
-                            'Mar',
-                            'Apr',
-                            'May',
-                            'Jun',
-                            'Jul',
-                            'Aug',
-                            'Sep',
-                            'Oct',
-                            'Nov',
-                            'Dec',
+                            'ม.ค.',
+                            'ก.พ.',
+                            'มี.ค.',
+                            'เม.ย.',
+                            'พ.ค.',
+                            'มิ.ย.',
+                            'ก.ค.',
+                            'ส.ค.',
+                            'ก.ย.',
+                            'ต.ค.',
+                            'พ.ย.',
+                            'ธ.ค.',
                         ],
                         crosshair: true
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'OT Amount (Baht)'
+                            text: 'ยอดเงิน OT (บาท)'
                         }
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} Baht</b></td></tr>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} บาท</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -269,30 +269,30 @@ $(function() {
                     },
                     xAxis: {
                         categories: [
-                            'Jan',
-                            'Feb',
-                            'Mar',
-                            'Apr',
-                            'May',
-                            'Jun',
-                            'Jul',
-                            'Aug',
-                            'Sep',
-                            'Oct',
-                            'Nov',
-                            'Dec',
+                            'ม.ค.',
+                            'ก.พ.',
+                            'มี.ค.',
+                            'เม.ย.',
+                            'พ.ค.',
+                            'มิ.ย.',
+                            'ก.ค.',
+                            'ส.ค.',
+                            'ก.ย.',
+                            'ต.ค.',
+                            'พ.ย.',
+                            'ธ.ค.',
                         ],
                         crosshair: true
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'OT Amount (Baht)'
+                            text: 'ยอดเงิน OT (บาท)'
                         }
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} Baht</b></td></tr>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} บาท</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true

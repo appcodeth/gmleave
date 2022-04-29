@@ -386,7 +386,7 @@ class OTApi(http.Controller):
         results = request.cr.fetchall()
         for o in results:
             rows.append({
-                'name': 'All Employee',
+                'name': 'ทั้งหมด',
                 'data': [o[i] for i in range(0, 12)]
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
@@ -450,7 +450,7 @@ class OTApi(http.Controller):
         results = request.cr.fetchall()
         for o in results:
             rows.append({
-                'name': 'All Employee',
+                'name': 'ทั้งหมด',
                 'data': [o[i] for i in range(0, 12)]
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')

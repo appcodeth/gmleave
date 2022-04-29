@@ -15,7 +15,7 @@ body {
     overflow: hidden;
     color: #444;
     font-size: 14px;
-    font-family: "Prompt", sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: #ecf0f1;
 }
 
@@ -63,8 +63,32 @@ body {
     border-radius: 0;
 }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
     background-color: #f7f7f9;
+}
+
+.table .row-active td {
+    background-color: #fafab3 !important;
+}
+
+.table .row-active td .fa {
+    color: #28a745 !important;
+}
+
+.table-list {
+    border: 0;
+}
+
+.table-list thead th {
+    border-top: 0;
+    border-bottom: 0;
+    color: #fff;
+    background-color: #777;
+}
+
+.table-list tbody tr td {
+    vertical-align: middle;
 }
 
 .navbar-dark {
@@ -164,13 +188,6 @@ body {
     overflow-y: auto;
 }
 
-.table .row-active {
-    background-color: #fafab3;
-}
-
-.table .row-active .fa {
-    color: #28a745;
-}
 
 .daterange-picker {
     padding: 4px 10px;
