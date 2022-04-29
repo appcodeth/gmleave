@@ -24,7 +24,11 @@ app.controller('ctrl', function($scope, $timeout, factory) {
         $scope.myPromise = factory.getOTApproveDraftList(id);
         $scope.myPromise.then(function(res) {
             if (!res.data.ok) {
-                alert(res.data.msg);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดความผิดพลาด',
+                    text: res.data.msg,
+                });
                 return;
             }
             $scope.ot_open_list = res.data.rows;
@@ -43,15 +47,37 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     }, true);
 
     $scope.doApproveOT = function() {
-        if (!confirm('Do you want to approve?')) {
-            return;
-        }
+        $.confirm({
+            title: 'ยืนยัน',
+            content: 'คุณต้องการอนุมัติ OT ใช่หรือไม่ ?',
+            buttons: {
+                confirm: {
+                    btnClass: 'btn-primary',
+                    text: 'ยืนยัน',
+                    action: function () {
+                        $scope.actionToApproveOT();
+                    },
+                },
+                cancel: {
+                    text: 'ยกเลิก',
+                },
+            }
+        });
+    };
 
+    $scope.actionToApproveOT = function() {
         var id = $('#emp_id').val();
         factory.doApproveOT(id).then(function(res) {
             if (res.data.ok) {
-                alert('Approve completed');
-                window.location.href = '/gmot/ot/approve/history/?id=' + id;
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: 'อนุมัติเรียบร้อยแล้ว',
+                  showConfirmButton: false,
+                  timer: 1500
+                }).then(() => {
+                    window.location.href = '/gmot/ot/approve/history/?id=' + id;
+                });
             }
         });
     };

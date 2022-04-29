@@ -133,7 +133,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     };
 
     $scope.deleteEmployeeHistory = function(history_id) {
-            $.confirm({
+        $.confirm({
             title: 'ยืนยัน',
             content: 'คุณต้องการลบข้อมูล ใช่หรือไม่ ?',
             buttons: {

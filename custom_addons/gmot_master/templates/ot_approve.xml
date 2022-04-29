@@ -4,43 +4,43 @@
         <t t-call="gmot_master.master_layouts">
             <t t-set="head">
                 <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
-                    <h2 class="my-4">OT Approve</h2>
+                    <h2 class="my-4">อนุมัติ OT</h2>
                     <div class="card border-0 shadow-sm mb-5">
-                        <div class="card-body">
-                            <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Department</th>
-                                        <th>Total</th>
-                                        <th>Current</th>
-                                        <th>Approve</th>
-                                        <th>History</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="p in ot_approve_list">
-                                        <td>@{p.code}</td>
-                                        <td>@{p.name}</td>
-                                        <td>@{p.position}</td>
-                                        <td>@{p.department}</td>
-                                        <td>@{p.cumulative_amount|number:decimal_digits}</td>
-                                        <td>@{p.total_amount|number:decimal_digits}</td>
-                                        <td>
-                                            <a href="#" ng-if="p.total_amount" ng-click="viewDetail(p)">View Detail</a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-info" ng-click="viewHistory(p)">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
+                        <table class="table table-bordered table-list table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th width="10%" class="text-center">รหัส</th>
+                                    <th>ชื่อ-นามสกุล</th>
+                                    <th width="12%">แผนก</th>
+                                    <th width="15%">ตำแหน่ง</th>
+                                    <th width="12%" class="text-right">ยอดเงินสะสม</th>
+                                    <th width="12%" class="text-right">ยอดเงิน OT</th>
+                                    <th width="12%" class="text-center">อนุมัติ</th>
+                                    <th width="10%" class="text-center">ประวัติ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="p in ot_approve_list">
+                                    <td class="text-center">@{p.code}</td>
+                                    <td>@{p.name}</td>
+                                    <td>@{p.department}</td>
+                                    <td>@{p.position}</td>
+                                    <td class="text-right">@{p.cumulative_amount|number:decimal_digits}</td>
+                                    <td class="text-right">
+                                        <strong>@{p.total_amount|number:decimal_digits}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" ng-if="p.total_amount" ng-click="viewDetail(p)">ดูรายละเอียด</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-info btn-sm" ng-click="viewHistory(p)">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </t>

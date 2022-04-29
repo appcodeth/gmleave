@@ -61,8 +61,8 @@
                                 <tr>
                                     <th style="width:10%">รหัสพนักงาน</th>
                                     <th>ชื่อ-นามสกุล</th>
-                                    <th style="width:15%">ตำแหน่ง</th>
                                     <th style="width:15%">แผนก</th>
+                                    <th style="width:15%">ตำแหน่ง</th>
                                     <th style="width:18%">วันที่มีผล</th>
                                     <th style="width:18%">เงินเดือนล่าสุด</th>
                                     <th class="text-center">ประวัติ</th>
@@ -72,8 +72,8 @@
                                 <tr ng-repeat="p in employee_list">
                                     <td>@{p.code}</td>
                                     <td>@{p.name}</td>
-                                    <td>@{p.position}</td>
                                     <td>@{p.department}</td>
+                                    <td>@{p.position}</td>
                                     <td>
                                         <div class="input-group">
                                             <input type="text" class="form-control" datepicker="" ng-model="p.effective_date" dp-format="dd/mm/yyyy"/>

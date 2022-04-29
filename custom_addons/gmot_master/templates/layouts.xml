@@ -87,19 +87,13 @@
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">
                                 <a href="/gmot/ot/approve/">
                                     <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
-                                    OT Approve
-                                </a>
-                            </li>
-                            <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'config' else '' }}">
-                                <a href="/gmot/config/">
-                                    <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
-                                    OT Config
+                                    อนุมัติ OT
                                 </a>
                             </li>
                             <li t-attf-class="{{ 'active' if menu == 'report' else '' }}">
                                 <a href="/gmot/report/">
                                     <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
-                                    Report
+                                    รายงาน
                                 </a>
                             </li>
                         </ul>

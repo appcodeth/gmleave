@@ -66,7 +66,7 @@ class MainController(http.Controller):
                 approve_date_list.append(approve_date)
         return request.render('gmot_master.ot_jobs_page', {
             'menu': 'ot_jobs',
-            'title': 'OT Jobs',
+            'title': 'ลงเวลา OT',
             'employee': employee,
             'approve_date_list': approve_date_list,
             'approve_date_list_length': len(approve_date_list),
@@ -76,15 +76,15 @@ class MainController(http.Controller):
     def ot_approve(self, **kwargs):
         return request.render('gmot_master.ot_approve_page', {
             'menu': 'ot_approve',
-            'title': 'OT Approve',
+            'title': 'อนุมัติ OT',
         })
 
     @http.route('/gmot/ot/approve/draft/', type='http', auth='public', website=True)
     def ot_approve_draft(self, **kwargs):
         employee = request.env['gmleave.employee'].sudo().search([('id', '=', request.params.get('id'))])
         return request.render('gmot_master.ot_approve_draft_page', {
-            'menu': 'ot_approve_draft',
-            'title': 'OT Draft',
+            'menu': 'ot_approve',
+            'title': 'อนุมัติ OT',
             'employee': employee,
         })
 
@@ -101,8 +101,8 @@ class MainController(http.Controller):
             else:
                 approve_date_list.append(approve_date)
         return request.render('gmot_master.ot_approve_history_page', {
-            'menu': 'ot_approve_history',
-            'title': 'OT Approve History',
+            'menu': 'ot_approve',
+            'title': 'อนุมัติ OT',
             'employee': employee,
             'approve_date_list': approve_date_list,
             'approve_date_list_length': len(approve_date_list),

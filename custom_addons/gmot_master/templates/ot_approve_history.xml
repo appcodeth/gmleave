@@ -4,9 +4,9 @@
         <t t-call="gmot_master.master_layouts">
             <t t-set="head">
                 <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
-                    <h2 class="mt-4">OT Approve History</h2>
+                    <h2 class="mt-4">อนุมัติ OT &amp;raquo; ประวัติ</h2>
                     <input type="hidden" id="emp_id" t-att-value="employee.id"/>
-                    <h5 class="mb-4">Name: [<span t-esc="employee.code"></span>]
+                    <h5 class="mb-4">พนักงาน: [<span t-esc="employee.code"></span>]
                         <span t-esc="employee.name"></span>
                     </h5>
                     <div class="card border-0 shadow-sm mb-5">
@@ -14,15 +14,15 @@
                             <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
                             <a href="/gmot/ot/approve/" class="btn btn-secondary">
                                 <i class="fa fa-chevron-left"></i>
-                                Back
+                                ย้อนกลับ
                             </a>
                         </div>
                         <div class="card-body">
                             <t t-if="approve_date_list_length">
-                                <div class="form-inline">
-                                    <label for="">Approve Date :</label>
-                                    <select class="form-control" ng-model="approve_date" ng-change="filterByApproveDate()">
-                                        <option value="">- All -</option>
+                                <div class="form-inline float-right my-4">
+                                    <strong>วันที่อนุมัติ :</strong>
+                                    <select class="form-control ml-2" ng-model="approve_date" ng-change="filterByApproveDate()">
+                                        <option value="">- ทั้งหมด -</option>
                                         <t t-foreach="approve_date_list" t-as="item">
                                             <option t-att-value="item">
                                                 <t t-esc="item"/>
@@ -30,39 +30,39 @@
                                         </t>
                                     </select>
                                 </div>
-                                <table class="table table-bordered my-5">
+                                <table class="table table-list table-hover mb-5">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Date</th>
-                                            <th>Approve Date</th>
-                                            <th>OT</th>
-                                            <th>Working Hours</th>
-                                            <th>Total</th>
+                                            <th class="text-center" style="width:10%">ลำดับ</th>
+                                            <th class="text-center" style="width:15%">วันที่ OT</th>
+                                            <th class="text-center" style="width:15%">วันที่อนุมัติ</th>
+                                            <th class="text-center" style="width:15%">OT</th>
+                                            <th class="text-center" style="width:15%">ชั่วโมงทำงาน</th>
+                                            <th class="text-right">จำนวนเงิน</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="p in ot_history_list">
-                                            <td>@{$index + 1}</td>
-                                            <td>@{p.ot_date}</td>
-                                            <td>@{p.approve_date}</td>
-                                            <td>@{p.ot_rate}</td>
-                                            <td>@{p.hours}</td>
-                                            <td>@{p.amount|number:decimal_digits}</td>
+                                            <td class="text-center">@{$index + 1}</td>
+                                            <td class="text-center">@{p.ot_date}</td>
+                                            <td class="text-center">@{p.approve_date}</td>
+                                            <td class="text-center">@{p.ot_rate|number:decimal_digits}</td>
+                                            <td class="text-center">@{p.hours}</td>
+                                            <td class="text-right">@{p.amount|number:decimal_digits}</td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3">Total</th>
-                                            <th>@{ot_history_total_rate}</th>
-                                            <th>@{ot_history_total_hours}</th>
-                                            <th>@{ot_history_total_amount|number:decimal_digits}</th>
+                                            <th colspan="3">รวมทั้งสิ้น</th>
+                                            <th class="text-center">@{ot_history_total_rate|number:decimal_digits}</th>
+                                            <th class="text-center">@{ot_history_total_hours}</th>
+                                            <th class="text-right">@{ot_history_total_amount|number:decimal_digits}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </t>
                             <t t-if="approve_date_list_length == 0">
-                                <strong>No data found!</strong>
+                                <h5 class="my-4 text-center">ไม่พบรายการ</h5>
                             </t>
                         </div>
                     </div>
