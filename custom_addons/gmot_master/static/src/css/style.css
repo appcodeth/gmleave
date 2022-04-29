@@ -36,6 +36,8 @@ body {
 }
 
 .datepicker {
+    padding-left: 0;
+    padding-right: 0;
     font-size: 14px;
 }
 
@@ -50,8 +52,9 @@ body {
 }
 
 .ms-options-wrap > button:focus, .ms-options-wrap > button {
-    width: 640px;
+    width: 625px;
     overflow: hidden;
+    border-radius: 0;
 }
 
 .input-group > .input-group-append > .btn,
@@ -87,8 +90,35 @@ body {
     background-color: #777;
 }
 
+.table-list thead a {
+    color: #fff;
+}
+
+.table-list thead .fa {
+    margin-left: 4px;
+}
+
 .table-list tbody tr td {
     vertical-align: middle;
+}
+
+.table-form {
+    width: 100%;
+}
+
+.table-form tr td {
+    padding: 5px;
+}
+
+.table-form tr td:first-child {
+    width: 170px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.table-form .required {
+    color: #f00;
+    font-weight: bold;
 }
 
 .navbar-dark {

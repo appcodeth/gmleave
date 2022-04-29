@@ -176,7 +176,7 @@ class OTApi(http.Controller):
             ('ot_id.id', '=', id),
         ])
         if count_status:
-            return Response(json.dumps({'ok': False, 'msg': 'Can not delete because OT is approved!'}), content_type='application/json')
+            return Response(json.dumps({'ok': False, 'msg': 'ไม่สามารถลบได้ เนื่องจาก OT มีการอนุมัติแล้ว!'}), content_type='application/json')
         request.env['gmot.ot'].sudo().search([('id', '=', id)]).unlink()
         request.env['gmot.ot_employee'].sudo().search([('ot_id.id', '=', id)]).unlink()
         return Response(json.dumps({'ok': True}), content_type='application/json')
@@ -216,7 +216,7 @@ class OTApi(http.Controller):
                     break
 
         if not eff_salary:
-            return Response(json.dumps({'ok': False, 'msg': 'Employee [ID {0}] have not config salary!'.format(EMPLOYEE_ID)}), content_type='application/json')
+            return Response(json.dumps({'ok': False, 'msg': 'พนักงาน [ID {0}] ยังไม่ได้กำหนดข้อมูลเงินเดือน!'.format(EMPLOYEE_ID)}), content_type='application/json')
 
         objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'draft')], order='ot_id')
         rows = []

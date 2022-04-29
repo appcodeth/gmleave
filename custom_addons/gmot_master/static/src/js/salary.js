@@ -133,14 +133,31 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     };
 
     $scope.deleteEmployeeHistory = function(history_id) {
-        if (confirm('ยืนยันการลบข้อมูล ?')) {
-            factory.deleteEmployeeHistory(history_id, $scope.employee.id).then(function(res) {
-                factory.getEmployeeHistory($scope.employee.id).then(function(hist) {
-                    $scope.employee_history_list = hist.data.rows;
-                });
-                $scope.getEmployeeList();
+            $.confirm({
+            title: 'ยืนยัน',
+            content: 'คุณต้องการลบข้อมูล ใช่หรือไม่ ?',
+            buttons: {
+                confirm: {
+                    btnClass: 'btn-danger',
+                    text: 'ยืนยัน',
+                    action: function () {
+                        $scope.doDelete(history_id);
+                    },
+                },
+                cancel: {
+                    text: 'ยกเลิก',
+                },
+            }
+        });
+    };
+
+    $scope.doDelete = function(history_id) {
+        factory.deleteEmployeeHistory(history_id, $scope.employee.id).then(function(res) {
+            factory.getEmployeeHistory($scope.employee.id).then(function(hist) {
+                $scope.employee_history_list = hist.data.rows;
             });
-        }
+            $scope.getEmployeeList();
+        });
     };
 
     $scope.init = function() {

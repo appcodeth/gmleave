@@ -9,15 +9,17 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="otModalLabel">Add OT</h5>
+                                    <h5 class="modal-title" id="otModalLabel">งาน OT</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&amp;times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <table class="table table-bordered">
+                                    <table class="table-form">
                                         <tr>
-                                            <th style="width:120px">Date</th>
+                                            <td>วันที่ OT
+                                                <span class="required">*</span>
+                                            </td>
                                             <td>
                                                 <div class="datepicker date input-group">
                                                     <input type="text" class="form-control" id="ot_date"/>
@@ -30,13 +32,17 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Rate</th>
+                                            <td>อัตราจ่าย (Rate)
+                                                <span class="required">*</span>
+                                            </td>
                                             <td>
                                                 <input type="text" class="form-control" id="ot_rate"/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Employee</th>
+                                            <td>พนักงาน
+                                                <span class="required">*</span>
+                                            </td>
                                             <td>
                                                 <select id="ot_employee" name="employees[]" multiple="">
                                                 </select>
@@ -45,48 +51,59 @@
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" ng-click="saveOT()">Save changes</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" ng-click="saveOT()">
+                                        <i class="fa fa-save"></i>
+                                        บันทึก
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- ./modals -->
 
-                    <h2 class="my-4">OT Open</h2>
+                    <h2 class="my-4">เปิดงาน OT</h2>
                     <div class="card border-0 shadow-sm mb-5">
-                        <div class="card-header bg-transparent">
+                        <div class="card-header py-3 bg-transparent">
                             <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
-                            <a href="#" class="btn btn-success" ng-click="addOTModal()">Add OT</a>
+                            <a href="#" class="btn btn-success" ng-click="addOTModal()"><i class="fa fa-plus"></i> เพิ่ม OT</a>
+                            <a href="#" class="btn btn-secondary" ng-click="init()"><i class="fas fa-sync"></i> เริ่มใหม่</a>
                         </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th sorted="date">Date</th>
-                                        <th sorted="rate">Rate</th>
-                                        <th>Employee</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="p in ot_list">
-                                        <td>@{p.date}</td>
-                                        <td>@{p.rate}</td>
-                                        <td>@{p.emp_strs}</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary" ng-click="editOT(p.id)">Edit</a>
-                                            <a href="#" class="btn btn-danger" ng-click="deleteOT(p.id)">Delete</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <table class="table table-list table-hover" ng-if="ot_list.length">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%" class="text-center" sorted="date">วันที่ OT</th>
+                                    <th style="width:12%" class="text-center" sorted="rate">อัตราจ่าย</th>
+                                    <th class="text-left">พนักงาน</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="p in ot_list">
+                                    <td class="text-center">@{p.date}</td>
+                                    <td class="text-center">@{p.rate|number:decimal_digits}</td>
+                                    <td class="text-left">@{p.emp_strs}</td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-info btn-sm" ng-click="editOT(p.id)">
+                                            <i class="fa fa-edit"></i>
+                                            แก้ไข
+                                        </a>
+                                        <a href="#" class="btn btn-danger btn-sm" ng-click="deleteOT(p.id)">
+                                            <i class="fa fa-trash"></i>
+                                            ลบ
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="card-body" ng-if="!ot_list.length">
+                            <h5 class="my-4 text-center">ไม่พบข้อมูล</h5>
                         </div>
-                        <div class="card-footer bg-transparent" ng-if="pageCount">
+                        <div class="card-footer py-3 bg-transparent" ng-if="pageCount">
                             <div class="float-right">
                                 <div paging="" page="page" page-size="rp" total="total" scroll-top="true" hide-if-empty="true" show-prev-next="true" show-first-last="true" paging-action="setPage('page', page)"></div>
                             </div>
-                            <div class="result">Displaying @{(((page || 1) - 1) * rp) + 1} - @{pageCount} of @{total} entries</div>
+                            <div class="result" style="font-weight:bold">แสดง @{(((page || 1) - 1) * rp) + 1} - @{pageCount} จาก @{total} รายการ</div>
                         </div>
                     </div>
                 </div>

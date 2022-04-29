@@ -28,11 +28,17 @@ app.factory('factory', function($http) {
     return factory;
 });
 
+function isValidDate(date) {
+    var temp = date.split('/');
+    var d = new Date(temp[1] + '/' + temp[0] + '/' + temp[2]);
+    return (d && (d.getMonth() + 1) == temp[1] && d.getDate() == Number(temp[0]) && d.getFullYear() == Number(temp[2]));
+}
 
 app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.ot_list = [];
     $scope.page = 1;
     $scope.rp = 5;
+    $scope.decimal_digits = 2;
 
     $scope.sortBy = function (ord) {
         $scope.desc = ($scope.sort === ord) ? !$scope.desc : true;
@@ -55,7 +61,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
         $('#ot_date').val('');
         $('#ot_rate').val('');
         $('#ot_employee').val('');
-        $('#otModal .ms-options-wrap button').html('- Select -');
+        $('#otModal .ms-options-wrap button').html('- เลือก -');
         $('#otModal input[type=checkbox]').prop('checked', false);
         $('#otModal ul li').removeClass('selected');
         $('.datepicker').datepicker("update", new Date());
@@ -63,7 +69,31 @@ app.controller('ctrl', function($scope, $timeout, factory) {
 
     $scope.saveOT = function() {
         if ($('#ot_date').val() && $('#ot_rate').val() && $('#ot_employee').val().length) {} else {
-            alert('Please enter all OT data!');
+            Swal.fire({
+                icon: 'error',
+                title: 'ข้อมูลไม่ถูกต้อง',
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+            });
+            return;
+        }
+
+        var err = '';
+        var result = isValidDate($('#ot_date').val());
+        if(!result) {
+            err = 'กรุณากรอกวันที่ OT ให้ถูกต้อง!\n';
+        }
+
+        result = !/^\s*$/.test($('#ot_rate').val()) && !isNaN($('#ot_rate').val());
+        if(!result) {
+            err = 'กรุณากรอกอัตราจ่าย (Rate) ให้ถูกต้อง!\n';
+        }
+
+        if(err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'ข้อมูลไม่ถูกต้อง',
+                text: err,
+            });
             return;
         }
 
@@ -79,7 +109,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
                 Swal.fire({
                   position: 'top-center',
                   icon: 'success',
-                  title: 'Save completed',
+                  title: 'บันทึกข้อมูลแล้ว',
                   showConfirmButton: false,
                   timer: 1500
                 });
@@ -110,15 +140,30 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     };
 
     $scope.deleteOT = function(id) {
-        if (!confirm('Confirm delete OT?')) {
-            return;
-        }
+        $.confirm({
+            title: 'ยืนยัน',
+            content: 'คุณต้องการลบข้อมูล OT ใช่หรือไม่ ?',
+            buttons: {
+                confirm: {
+                    btnClass: 'btn-danger',
+                    text: 'ยืนยัน',
+                    action: function () {
+                        $scope.doDelete(id);
+                    },
+                },
+                cancel: {
+                    text: 'ยกเลิก',
+                },
+            }
+        });
+    };
 
+    $scope.doDelete = function(id) {
         factory.deleteOT(id).then(function(res) {
             if (!res.data.ok) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Alert',
+                    title: 'เกิดความผิดพลาด',
                     text: res.data.msg,
                 });
                 return;
@@ -126,7 +171,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
             Swal.fire({
               position: 'top-center',
               icon: 'success',
-              title: 'Delete success',
+              title: 'ลบข้อมูลเรียบร้อยแล้ว',
               showConfirmButton: false,
               timer: 1500
             });
@@ -168,7 +213,7 @@ $(function() {
 
         $('#ot_employee').multiselect({
             columns: 1,
-            placeholder: '- Select -',
+            placeholder: '- เลือก -',
             search: false,
             selectAll: true,
         });
