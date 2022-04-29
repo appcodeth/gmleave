@@ -37,7 +37,7 @@ function isValidDate(date) {
 app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.ot_list = [];
     $scope.page = 1;
-    $scope.rp = 5;
+    $scope.rp = 20;
     $scope.decimal_digits = 2;
 
     $scope.sortBy = function (ord) {
