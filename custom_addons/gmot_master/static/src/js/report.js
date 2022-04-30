@@ -37,13 +37,14 @@ app.controller('ctrl', function($scope, $timeout, factory) {
     $scope.report_list = [];
     $scope.decimal_digits = 2;
     $scope.total_amount = 0;
+    $scope.click_run = false;
 
     $scope.getReportList = function() {
         start = $('#from_date').val();
         end = $('#to_date').val();
-        console.log(start, end);
         $scope.myPromise = factory.getReportList(getDate(start), getDate(end));
         $scope.myPromise.then(function(res) {
+            $scope.click_run = true;
             $scope.report_list = res.data.rows;
         });
     };
@@ -54,4 +55,8 @@ app.controller('ctrl', function($scope, $timeout, factory) {
             $scope.total_amount += item.ot_amount;
         });
     }, true);
+
+    $scope.viewReport = function(p) {
+        window.location.href = '/gmot/report/detail/?approve=' + getDate(p.approve_date);
+    };
 });

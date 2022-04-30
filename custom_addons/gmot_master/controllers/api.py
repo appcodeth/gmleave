@@ -531,8 +531,50 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
+    @http.route('/api/report/detail/', type='http', auth='public')
+    def report_detail(self, **kw):
+        approve = request.params.get('approve') + ' 00:00:00'
+        if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
+            sql = """
+                    select
+                        ot.date,
+                        em.approve_date,
+                        ot.rate,
+                        sum(em.hours) as sum_hours,
+                        sum(em.amount) as sum_amount
+                    from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
+                    where em.status='approve' and em.approve_date='{0}'
+                    group by ot.date, em.approve_date, ot.rate
+                """.format(approve)
+        else:
+            emp_id = self.get_employee_id()
+            sql = """
+                    select
+                        ot.date,
+                        em.approve_date,
+                        ot.rate,
+                        sum(em.hours) as sum_hours,
+                        sum(em.amount) as sum_amount
+                    from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
+                    where em.status='approve' and em.approve_date='{0}' and em.employee_id={1}
+                    group by ot.date, em.approve_date, ot.rate
+                """.format(approve, emp_id)
+        rows = []
+        request.cr.execute(sql)
+        results = request.cr.fetchall()
+
+        for o in results:
+            rows.append({
+                'date': o[0].strftime('%d/%m/%Y') if o[0] else '',
+                'approve_date': o[1].strftime('%d/%m/%Y') if o[1] else '',
+                'rate': o[2],
+                'sum_hours': o[3],
+                'sum_amount': o[4],
+            })
+        return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
+
     @http.route('/api/report/detail/xlsx/', type='http', auth='public')
-    def report_summary(self, **kw):
+    def report_detail_xls(self, **kw):
         approve = request.params.get('approve') + ' 00:00:00'
         if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
             sql = """
@@ -540,8 +582,8 @@ class OTApi(http.Controller):
                     ot.date,
                     em.approve_date,
                     ot.rate,
-                    sum(em.hours),
-                    sum(em.amount)
+                    sum(em.hours) as sum_hours,
+                    sum(em.amount) as sum_amount
                 from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
                 where em.status='approve' and em.approve_date='{0}'
                 group by ot.date, em.approve_date, ot.rate
@@ -553,8 +595,8 @@ class OTApi(http.Controller):
                     ot.date,
                     em.approve_date,
                     ot.rate,
-                    sum(em.hours),
-                    sum(em.amount)
+                    sum(em.hours) as sum_hours,
+                    sum(em.amount) as sum_amount
                 from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
                 where em.status='approve' and em.approve_date='{0}' and em.employee_id={1}
                 group by ot.date, em.approve_date, ot.rate
@@ -566,7 +608,7 @@ class OTApi(http.Controller):
             None,
             headers=[
                 ('Content-Type', 'application/vnd.ms-excel'),
-                ('Content-Disposition', 'attachment; filename=Report.xlsx;')
+                ('Content-Disposition', 'attachment; filename=ot_detail_report_{0}.xlsx;'.format(request.params.get('approve')))
             ]
         )
         output = io.BytesIO()

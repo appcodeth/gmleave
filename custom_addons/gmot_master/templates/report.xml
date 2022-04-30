@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <h5 class="mb-5" ng-if="!report_list.length">ไม่พบข้อมูล</h5>
+                    <h5 class="mb-5" ng-if="!report_list.length &amp;&amp; click_run">ไม่พบข้อมูล</h5>
                     <div class="card border-0 mb-5" ng-if="report_list.length">
                         <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
                         <table class="table table-bordered table-list table-hover mb-0">
@@ -48,7 +48,7 @@
                                     <td class="text-center">@{p.approve_date}</td>
                                     <td class="text-right">@{p.ot_amount|number:decimal_digits}</td>
                                     <td class="text-center">
-                                        <a href="#">ดูรายละเอียด</a>
+                                        <a href="#" ng-click="viewReport(p)">ดูรายละเอียด</a>
                                     </td>
                                 </tr>
                             </tbody>

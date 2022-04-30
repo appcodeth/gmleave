@@ -44,6 +44,7 @@ class MainController(http.Controller):
         return request.render('gmot_master.report_detail_page', {
             'menu': 'report',
             'title': 'รายงาน',
+            'approve': approve,
         })
 
     @http.route('/gmot/config/', type='http', auth='public', website=True)

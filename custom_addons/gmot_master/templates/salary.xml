@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <!-- ./modals -->
-                    <h2 class="my-4">เงินเดือนพนักงาน</h2>
+                    <h2 class="my-4">เงินเดือน</h2>
                     <div class="card border-0 shadow-sm mb-5">
                         <div class="card-header py-3 bg-transparent">
                             <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
