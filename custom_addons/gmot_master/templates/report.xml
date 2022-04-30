@@ -2,13 +2,70 @@
 <odoo>
     <template id="report_page" name="Report Page">
         <t t-call="gmot_master.master_layouts">
-            <xpath expr="//t[@t-raw='0']" position="replace">
-                <h1>Reports</h1>
-            </xpath>
-            <xpath expr="//t[@t-raw='1']" position="replace">
-                <script>
-                </script>
-            </xpath>
+            <t t-set="head">
+                <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
+                    <h2 class="my-4">รายงาน</h2>
+                    <div class="card border-0 mb-4">
+                        <div class="card-body">
+                            <div class="form-inline">
+                                <strong class="mr-2">วันที่อนุมัติ :</strong>
+                                <div class="datepicker from_date date input-group mr-3">
+                                    <input type="text" class="form-control" id="from_date" style="width:120px"/>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-clock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <strong class="mr-2">ถึงวันที่ :</strong>
+                                <div class="datepicker to_date date input-group mr-3">
+                                    <input type="text" class="form-control" id="to_date" style="width:120px"/>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-clock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary mr-1" ng-click="getReportList()">แสดงรายงาน</a>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="mb-5" ng-if="!report_list.length">ไม่พบข้อมูล</h5>
+                    <div class="card border-0 mb-5" ng-if="report_list.length">
+                        <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
+                        <table class="table table-bordered table-list table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%" class="text-center">ลำดับ</th>
+                                    <th style="width:25%" class="text-center">วันที่อนุมัติ</th>
+                                    <th style="width:30%" class="text-right">จำนวนเงิน</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="p in report_list">
+                                    <td class="text-center">@{$index + 1}</td>
+                                    <td class="text-center">@{p.approve_date}</td>
+                                    <td class="text-right">@{p.ot_amount|number:decimal_digits}</td>
+                                    <td class="text-center">
+                                        <a href="#">ดูรายละเอียด</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2">รวม</th>
+                                    <th class="text-right">@{total_amount|number:decimal_digits}</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </t>
+            <t t-set="script">
+                <script src="/gmot_master/static/src/js/report.js"></script>
+            </t>
         </t>
     </template>
 </odoo>

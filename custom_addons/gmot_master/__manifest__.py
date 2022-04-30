@@ -11,6 +11,7 @@
         'templates/layouts.xml',
         'templates/index.xml',
         'templates/report.xml',
+        'templates/report_detail.xml',
         'templates/salary.xml',
         'templates/config.xml',
         'templates/ot_approve.xml',

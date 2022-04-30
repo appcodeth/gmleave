@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_detail_page" name="Report Detail Page">
+        <t t-call="gmot_master.master_layouts">
+            <t t-set="head">
+                <div class="container-fluid">
+                    <h2 class="mt-4">อนุมัติ OT &amp;raquo; 2022-01-01</h2>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent border-0">
+                            <a href="/gmot/report" class="btn btn-secondary">
+                                <i class="fa fa-chevron-left"></i>
+                                ย้อนกลับ
+                            </a>
+                            <a class="btn btn-info">
+                                <i class="fa fa-file-excel"></i>
+                                ส่งออกเป็น Excel
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>11</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+            <t t-set="script">
+            </t>
+        </t>
+    </template>
+</odoo>

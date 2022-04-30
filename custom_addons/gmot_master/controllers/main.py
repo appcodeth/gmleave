@@ -35,7 +35,15 @@ class MainController(http.Controller):
     def report(self, **kwargs):
         return request.render('gmot_master.report_page', {
             'menu': 'report',
-            'title': 'Reports',
+            'title': 'รายงาน',
+        })
+
+    @http.route('/gmot/report/detail/', type='http', auth='public', website=True)
+    def report_detail(self, **kwargs):
+        approve = request.params.get('approve')
+        return request.render('gmot_master.report_detail_page', {
+            'menu': 'report',
+            'title': 'รายงาน',
         })
 
     @http.route('/gmot/config/', type='http', auth='public', website=True)

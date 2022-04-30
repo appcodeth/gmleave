@@ -1,8 +1,10 @@
 import json
+import io
 from math import ceil
 from datetime import datetime, date, timedelta
 from odoo import http
 from odoo.http import request, Response
+from odoo.tools.misc import xlsxwriter
 
 CFG_WORKDAY_PER_MONTH = 30
 CFG_WORKHOUR_PER_DAY = 8
@@ -488,3 +490,104 @@ class OTApi(http.Controller):
                 'data': [o[i] for i in range(2, 14)]
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
+
+    @http.route('/api/report/list/', type='http', auth='public')
+    def report_list(self, **kw):
+        start = request.params.get('start') + ' 00:00:00'
+        end = request.params.get('end') + ' 23:59:59'
+
+        if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
+            sql = """
+                select
+                    ot.approve_date,
+                    sum(ot.amount) as ot_amount
+                from gmot_ot_employee ot
+                where
+                    ot.approve_date between '{0}' and '{1}' and ot.status='approve'
+                group by ot.approve_date
+                order by ot.approve_date
+            """.format(start, end)
+        else:
+            emp_id = self.get_employee_id()
+            sql = """
+                select
+                    ot.approve_date,
+                    sum(ot.amount) as ot_amount
+                from gmot_ot_employee ot
+                where
+                    ot.approve_date between '{0}' and '{1}' and
+                    ot.status='approve' and
+                    ot.employee_id={2}
+                group by ot.approve_date
+                order by ot.approve_date
+            """.format(start, end, emp_id)
+        rows = []
+        request.cr.execute(sql)
+        results = request.cr.fetchall()
+        for o in results:
+            rows.append({
+                'approve_date': o[0].strftime('%d/%m/%Y') if o[0] else '',
+                'ot_amount': o[1],
+            })
+        return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
+
+    @http.route('/api/report/detail/xlsx/', type='http', auth='public')
+    def report_summary(self, **kw):
+        approve = request.params.get('approve') + ' 00:00:00'
+        if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
+            sql = """
+                select
+                    ot.date,
+                    em.approve_date,
+                    ot.rate,
+                    sum(em.hours),
+                    sum(em.amount)
+                from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
+                where em.status='approve' and em.approve_date='{0}'
+                group by ot.date, em.approve_date, ot.rate
+            """.format(approve)
+        else:
+            emp_id = self.get_employee_id()
+            sql = """
+                select
+                    ot.date,
+                    em.approve_date,
+                    ot.rate,
+                    sum(em.hours),
+                    sum(em.amount)
+                from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
+                where em.status='approve' and em.approve_date='{0}' and em.employee_id={1}
+                group by ot.date, em.approve_date, ot.rate
+            """.format(approve, emp_id)
+        rows = []
+        request.cr.execute(sql)
+        results = request.cr.fetchall()
+        response = request.make_response(
+            None,
+            headers=[
+                ('Content-Type', 'application/vnd.ms-excel'),
+                ('Content-Disposition', 'attachment; filename=Report.xlsx;')
+            ]
+        )
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        sheet = workbook.add_worksheet('Sheet1')
+        sheet.write(0, 0, 'ลำดับ')
+        sheet.write(0, 1, 'วันที่ OT')
+        sheet.write(0, 2, 'วันที่อนุมัติ')
+        sheet.write(0, 3, 'Rate')
+        sheet.write(0, 4, 'ชั่วโมงทำงาน')
+        sheet.write(0, 5, 'จำนวนเงิน')
+        row_num = 1
+        for o in results:
+            sheet.write(row_num, 0, row_num)
+            sheet.write(row_num, 1, o[0].strftime('%Y-%m-%d') if o[0] else '')
+            sheet.write(row_num, 2, o[1].strftime('%Y-%m-%d') if o[1] else '')
+            sheet.write(row_num, 3, o[2])
+            sheet.write(row_num, 4, o[3])
+            sheet.write(row_num, 5, o[4])
+            row_num += 1
+        workbook.close()
+        output.seek(0)
+        response.stream.write(output.read())
+        return response
