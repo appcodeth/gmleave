@@ -44,7 +44,7 @@
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img t-att-src="image_url" width="24px" height="24px" class="rounded-circle"/>
+<!--                                        <img t-att-src="image_url" width="24px" height="24px" class="rounded-circle"/>-->
                                         <t t-esc="request.env.user.name"/>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
