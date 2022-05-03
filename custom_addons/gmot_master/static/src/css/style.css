@@ -14,8 +14,8 @@ html,body {
 body {
     overflow: hidden;
     color: #444;
-    font-size: 14px;
-    font-family: "Kanit", sans-serif;
+    font-size: 13px;
+    font-family: "Roboto", sans-serif;
     background-color: #ecf0f1;
 }
 
@@ -32,17 +32,17 @@ body {
 }
 
 .btn {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .datepicker {
     padding-left: 0;
     padding-right: 0;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .form-control {
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 0;
 }
 
