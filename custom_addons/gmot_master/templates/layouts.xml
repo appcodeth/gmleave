@@ -62,37 +62,37 @@
                         <ul class="sidemenu">
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'index' else '' }}">
                                 <a href="/gmot/">
-                                    <img src="/gmot_master/static/src/img/icon/app1.png" alt=""/>
+                                    <img src="/gmot_master/static/src/img/icon/dashboard.png" alt=""/>
                                     แดชบอร์ด
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'salary' else '' }}">
                                 <a href="/gmot/salary/">
-                                    <img src="/gmot_master/static/src/img/icon/app2.png" alt=""/>
+                                    <img src="/gmot_master/static/src/img/icon/salary.png" alt=""/>
                                     เงินเดือน
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_open' else '' }}">
                                 <a href="/gmot/ot/open/">
-                                    <img src="/gmot_master/static/src/img/icon/app3.png" alt=""/>
+                                    <img src="/gmot_master/static/src/img/icon/otopen.png" alt=""/>
                                     เปิดงาน OT
                                 </a>
                             </li>
                             <li t-attf-class="{{ 'active' if menu == 'ot_jobs' else '' }}">
                                 <a href="/gmot/ot/jobs/">
-                                    <img src="/gmot_master/static/src/img/icon/app4.png" alt=""/>
+                                    <img src="/gmot_master/static/src/img/icon/otinput.png" alt=""/>
                                     ลงเวลา OT
                                 </a>
                             </li>
                             <li t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')" t-attf-class="{{ 'active' if menu == 'ot_approve' else '' }}">
                                 <a href="/gmot/ot/approve/">
-                                    <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
+                                    <img src="/gmot_master/static/src/img/icon/otapprove.png" alt=""/>
                                     อนุมัติ OT
                                 </a>
                             </li>
                             <li t-attf-class="{{ 'active' if menu == 'report' else '' }}">
                                 <a href="/gmot/report/">
-                                    <img src="/gmot_master/static/src/img/icon/app5.png" alt=""/>
+                                    <img src="/gmot_master/static/src/img/icon/report.png" alt=""/>
                                     รายงาน
                                 </a>
                             </li>

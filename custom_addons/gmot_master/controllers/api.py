@@ -18,7 +18,7 @@ class OTApi(http.Controller):
             employee = request.env['gmleave.employee'].sudo().search([('name', '=', request.env.user.name)])
         return employee.id
 
-    @http.route('/api/employee/list/', type='http', auth='public')
+    @http.route('/api/employee/list/', type='http', auth='user')
     def get_employee_list(self, **kw):
         objects = request.env['gmleave.employee'].sudo().search([('is_active', '=', True)], order='code asc')
         rows = []
@@ -34,7 +34,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/employee/history/', type='http', auth='public')
+    @http.route('/api/employee/history/', type='http', auth='user')
     def get_employee_history(self, **kw):
         id = request.params.get('id')
         objects = request.env['gmot.employee_salary'].sudo().search([('employee_id.id', '=', id)], order='date desc')
@@ -85,7 +85,7 @@ class OTApi(http.Controller):
                     })
         return {'ok': True}
 
-    @http.route('/api/employee/history/delete/', type='http', auth='public')
+    @http.route('/api/employee/history/delete/', type='http', auth='user')
     def delete_employee_history(self, **kw):
         id = request.params.get('id')
         emp_id = request.params.get('emp_id')
@@ -106,7 +106,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True}), content_type='application/json')
 
-    @http.route('/api/ot/list/', type='http', auth='public')
+    @http.route('/api/ot/list/', type='http', auth='user')
     def ot_list(self, **kw):
         rp = int(request.params.get('rp') or '2')
         page = int(request.params.get('page') or '1')
@@ -144,7 +144,7 @@ class OTApi(http.Controller):
             'page_count': page_count,
         }), content_type='application/json')
 
-    @http.route('/api/ot/save/', methods=['POST'], csrf=False, type='json', auth='public')
+    @http.route('/api/ot/save/', methods=['POST'], csrf=False, type='json', auth='user')
     def ot_save(self, **kw):
         data = request.params.get('data')
 
@@ -170,7 +170,7 @@ class OTApi(http.Controller):
             })
         return {'ok': True}
 
-    @http.route('/api/ot/delete/', type='http', auth='public')
+    @http.route('/api/ot/delete/', type='http', auth='user')
     def ot_delete(self, **kw):
         id = request.params.get('id')
         count_status = request.env['gmot.ot_employee'].sudo().search_count([
@@ -183,7 +183,7 @@ class OTApi(http.Controller):
         request.env['gmot.ot_employee'].sudo().search([('ot_id.id', '=', id)]).unlink()
         return Response(json.dumps({'ok': True}), content_type='application/json')
 
-    @http.route('/api/ot/get/', type='http', auth='public')
+    @http.route('/api/ot/get/', type='http', auth='user')
     def ot_get(self, **kw):
         id = request.params.get('id')
         obj = request.env['gmot.ot'].sudo().search([('id', '=', id)])
@@ -198,7 +198,7 @@ class OTApi(http.Controller):
         }
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/ot/employee/list/', type='http', auth='public')
+    @http.route('/api/ot/employee/list/', type='http', auth='user')
     def ot_employee_list(self, **kw):
         EMPLOYEE_ID = self.get_employee_id()
         emp = request.env['gmleave.employee'].sudo().search([('id', '=', EMPLOYEE_ID)])
@@ -236,7 +236,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/ot/employee/save/', methods=['POST'], csrf=False, type='json', auth='public')
+    @http.route('/api/ot/employee/save/', methods=['POST'], csrf=False, type='json', auth='user')
     def ot_employee_save(self, **kw):
         rows = request.params.get('data')
         for r in rows:
@@ -250,7 +250,7 @@ class OTApi(http.Controller):
             })
         return {'ok': True}
 
-    @http.route('/api/ot/employee/history/', type='http', auth='public')
+    @http.route('/api/ot/employee/history/', type='http', auth='user')
     def ot_employee_history(self, **kw):
         EMPLOYEE_ID = self.get_employee_id()
         context = [('employee_id.id', '=', EMPLOYEE_ID), ('status', '=', 'approve')]
@@ -274,7 +274,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/ot/approve/list/', type='http', auth='public')
+    @http.route('/api/ot/approve/list/', type='http', auth='user')
     def ot_approve_list(self, **kw):
         sql = """
                 select
@@ -307,7 +307,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/ot/approve/draft/list/', type='http', auth='public')
+    @http.route('/api/ot/approve/draft/list/', type='http', auth='user')
     def ot_approve_draft_list(self, **kw):
         emp_id = request.params.get('emp_id')
         objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'draft'), ('amount', '>', 0)], order='ot_id')
@@ -327,7 +327,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/ot/approve/history/list/', type='http', auth='public')
+    @http.route('/api/ot/approve/history/list/', type='http', auth='user')
     def ot_approve_history_list(self, **kw):
         emp_id = request.params.get('emp_id')
         context = [('employee_id.id', '=', emp_id), ('status', '=', 'approve')]
@@ -352,7 +352,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/ot/approve/confirm/', type='http', auth='public')
+    @http.route('/api/ot/approve/confirm/', type='http', auth='user')
     def ot_approve_confirm(self, **kw):
         emp_id = request.params.get('emp_id')
         objects = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'draft'), ('amount', '>', 0)], order='ot_id')
@@ -363,7 +363,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True}), content_type='application/json')
 
-    @http.route('/api/dashboard/hours/all/', type='http', auth='public')
+    @http.route('/api/dashboard/hours/all/', type='http', auth='user')
     def dashboard_hour_all(self, **kw):
         start = request.params.get('start') + ' 00:00:00'
         end = request.params.get('end') + ' 23:59:59'
@@ -393,7 +393,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/dashboard/hours/employee/', type='http', auth='public')
+    @http.route('/api/dashboard/hours/employee/', type='http', auth='user')
     def dashboard_hour_by_employee(self, **kw):
         start = request.params.get('start') + ' 00:00:00'
         end = request.params.get('end') + ' 23:59:59'
@@ -427,7 +427,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/dashboard/amount/all/', type='http', auth='public')
+    @http.route('/api/dashboard/amount/all/', type='http', auth='user')
     def dashboard_amount_all(self, **kw):
         start = request.params.get('start') + ' 00:00:00'
         end = request.params.get('end') + ' 23:59:59'
@@ -457,7 +457,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/dashboard/amount/employee/', type='http', auth='public')
+    @http.route('/api/dashboard/amount/employee/', type='http', auth='user')
     def dashboard_amount_by_employee(self, **kw):
         start = request.params.get('start') + ' 00:00:00'
         end = request.params.get('end') + ' 23:59:59'
@@ -491,7 +491,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/report/list/', type='http', auth='public')
+    @http.route('/api/report/list/', type='http', auth='user')
     def report_list(self, **kw):
         start = request.params.get('start') + ' 00:00:00'
         end = request.params.get('end') + ' 23:59:59'
@@ -531,7 +531,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/report/detail/', type='http', auth='public')
+    @http.route('/api/report/detail/', type='http', auth='user')
     def report_detail(self, **kw):
         approve = request.params.get('approve') + ' 00:00:00'
         if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
@@ -573,7 +573,7 @@ class OTApi(http.Controller):
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
-    @http.route('/api/report/detail/xlsx/', type='http', auth='public')
+    @http.route('/api/report/detail/xlsx/', type='http', auth='user')
     def report_detail_xls(self, **kw):
         approve = request.params.get('approve') + ' 00:00:00'
         if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
