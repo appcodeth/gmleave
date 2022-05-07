@@ -18,7 +18,7 @@
         <field name="tag">home_overview</field>
     </record>
 
-    <menuitem id="menu_dashboard" name="Dashboard" sequence="2" groups="gmleave_master.group_master_manager" web_icon="gmleave_dashboard,static/description/icon.png"/>
+    <menuitem id="menu_dashboard" name="Dashboard" sequence="2" web_icon="gmleave_dashboard,static/description/icon.png"/>
     <menuitem id="menu_dashboard_home" parent="menu_dashboard" name="Home" action="action_home_overview" sequence="1"/>
-    <menuitem id="menu_dashboard_overview" parent="menu_dashboard" name="Overview" action="action_dashboard_overview" sequence="2"/>
+    <menuitem id="menu_dashboard_overview" parent="menu_dashboard" groups="gmleave_master.group_master_manager" name="Overview" action="action_dashboard_overview" sequence="2"/>
 </odoo>
