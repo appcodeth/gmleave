@@ -57,7 +57,7 @@ msgstr "ภาพรวม"
 #: model:ir.ui.menu,name:gmleave_dashboard.menu_dashboard_home
 #: model:ir.ui.menu,name:gmleave_dashboard.menu_dashboard_home_admin
 msgid "Portal"
-msgstr "เมนูลัด"
+msgstr "ระบบ"
 
 #. module: gmleave_dashboard
 #. openerp-web
