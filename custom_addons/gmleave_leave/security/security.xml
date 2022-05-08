@@ -19,12 +19,6 @@
         </record>
     </data>
 
-    <!--    <data noupdate="1">-->
-    <!--        <record id="base.default_user" model="res.users">-->
-    <!--            <field name="groups_id" eval="[(4,ref('gmleave_leave.group_leave_manager'))]"/>-->
-    <!--        </record>-->
-    <!--    </data>-->
-
     <record id="leave_rule_manager" model="ir.rule">
         <field name="name">Leave Rule Manager</field>
         <field name="model_id" ref="model_gmleave_leave"/>

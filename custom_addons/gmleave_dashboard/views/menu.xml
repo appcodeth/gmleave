@@ -23,8 +23,10 @@
         <field name="tag">home_admin_overview</field>
     </record>
 
-    <menuitem id="menu_dashboard" name="Dashboard" sequence="2" web_icon="gmleave_dashboard,static/description/icon.png"/>
-    <menuitem id="menu_dashboard_home" parent="menu_dashboard" groups="gmleave_master.group_user_home_menu" name="Home" action="action_home_overview" sequence="1"/>
-    <menuitem id="menu_dashboard_home_admin" parent="menu_dashboard" groups="gmleave_master.group_master_manager" name="Home" action="action_home_admin_overview" sequence="2"/>
-    <menuitem id="menu_dashboard_overview" parent="menu_dashboard" groups="gmleave_master.group_master_manager" name="Overview" action="action_dashboard_overview" sequence="3"/>
+    <menuitem id="menu_home_top" name="Home" sequence="1" web_icon="gmleave_dashboard,static/description/home.png"/>
+    <menuitem id="menu_dashboard_home" parent="menu_home_top" groups="gmleave_master.group_user_home_menu" name="Portal" action="action_home_overview" sequence="1"/>
+    <menuitem id="menu_dashboard_home_admin" parent="menu_home_top" groups="gmleave_master.group_master_manager" name="Portal" action="action_home_admin_overview" sequence="2"/>
+
+    <menuitem id="menu_dashboard" name="Dashboard" sequence="2" groups="gmleave_master.group_master_manager"  web_icon="gmleave_dashboard,static/description/icon.png"/>
+    <menuitem id="menu_dashboard_overview" parent="menu_dashboard" name="Overview" action="action_dashboard_overview" sequence="3"/>
 </odoo>

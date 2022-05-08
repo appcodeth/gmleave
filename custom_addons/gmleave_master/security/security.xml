@@ -19,15 +19,9 @@
         </record>
 
         <record model="res.groups" id="group_user_home_menu">
-            <field name="name">GM User Home Menu Group</field>
+            <field name="name">User Home Menu</field>
         </record>
     </data>
-
-    <!--    <data noupdate="1">-->
-    <!--        <record id="base.default_user" model="res.users">-->
-    <!--            <field name="groups_id" eval="[(4,ref('gmleave_master.group_master_manager'))]"/>-->
-    <!--        </record>-->
-    <!--    </data>-->
 
     <record id="employee_rule_manager" model="ir.rule">
         <field name="name">Employee Manager</field>
@@ -44,7 +38,7 @@
         <field name="name">Employee User</field>
         <field name="model_id" ref="model_gmleave_employee"/>
         <field name="domain_force">[('user_id','=',user.id)]</field>
-        <field name="groups" eval="[(4,ref('base.group_user')),(4,ref('gmleave_master.group_master_user')),(4,ref('gmleave_master.group_user_home_menu'))]"/>
+        <field name="groups" eval="[(4,ref('base.group_user')),(4,ref('gmleave_master.group_master_user'))]"/>
         <field name='perm_create' eval='True'/>
         <field name='perm_read' eval='True'/>
         <field name='perm_unlink' eval='True'/>
