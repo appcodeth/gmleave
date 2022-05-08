@@ -13,7 +13,10 @@
                         <div class="card-body">
                             <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
                             <div class="mb-4" ng-if="ot_open_list.length">
-                                <a href="#" class="btn btn-info" ng-click="saveOTEmployee()"><i class="fa fa-save"></i> บันทึก</a>
+                                <a href="#" class="btn btn-info" ng-click="saveOTEmployee()">
+                                    <i class="fa fa-save"></i>
+                                    บันทึก
+                                </a>
                                 <a href="#" class="btn btn-danger" ng-click="init()">ยกเลิก</a>
                             </div>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -49,9 +52,8 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="2">รวม</th>
-                                                <th class="text-center">@{ot_total_rate|number:decimal_digits}</th>
-                                                <th class="text-center">@{ot_total_hours}</th>
+                                                <th colspan="3">รวม</th>
+                                                <th class="text-center">@{ot_total_hours|number:0}</th>
                                                 <th class="text-right">@{ot_total_amount|number:decimal_digits}</th>
                                             </tr>
                                         </tfoot>
@@ -94,9 +96,8 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th colspan="3">รวมทั้งสิ้น</th>
-                                                    <th class="text-center">@{ot_history_total_rate|number:decimal_digits}</th>
-                                                    <th class="text-center">@{ot_history_total_hours}</th>
+                                                    <th colspan="4">รวมทั้งสิ้น</th>
+                                                    <th class="text-center">@{ot_history_total_hours|number:0}</th>
                                                     <th class="text-right">@{ot_history_total_amount|number:decimal_digits}</th>
                                                 </tr>
                                             </tfoot>

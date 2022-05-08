@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-	<t t-name="HomeOverview">
+	<t t-name="HomeAdminOverview">
         <div class="container-fluid" style="position: relative; top:15%">
             <div class="card bg-transparent border-0 text-center" style="width:450px; margin: 0 auto">
                 <div style="padding:40px 60px">
                     <h1 class="mb-5">Select Apps</h1>
-                    <a href="/web#action=146&amp;model=gmleave.leave&amp;view_type=list&amp;cids=1&amp;menu_id=109" class="btn btn-primary text-white btn-lg btn-block py-3 my-3">Leave</a>
+                    <a href="/web#action=147&amp;cids=1&amp;menu_id=112" class="btn btn-primary text-white btn-lg btn-block py-3 my-3">Leave</a>
                     <a href="/gmot" class="btn btn-primary text-white btn-lg btn-block py-3 my-3">OT</a>
                 </div>
             </div>

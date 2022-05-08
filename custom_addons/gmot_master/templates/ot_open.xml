@@ -36,7 +36,14 @@
                                                 <span class="required">*</span>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="ot_rate"/>
+                                                <!--                                                <input type="text" class="form-control" id="ot_rate"/>-->
+                                                <select class="form-control" id="ot_rate">
+                                                    <option value="">- เลือก -</option>
+                                                    <option value="1">1</option>
+                                                    <option value="1.5">1.5</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -66,8 +73,14 @@
                     <div class="card border-0 shadow-sm mb-5">
                         <div class="card-header py-3 bg-transparent">
                             <div cg-busy="{promise:myPromise,message:'Loading'}"></div>
-                            <a href="#" class="btn btn-success" ng-click="addOTModal()"><i class="fa fa-plus"></i> เพิ่ม OT</a>
-                            <a href="#" class="btn btn-secondary" ng-click="init()"><i class="fas fa-sync"></i> เริ่มใหม่</a>
+                            <a href="#" class="btn btn-success" ng-click="addOTModal()">
+                                <i class="fa fa-plus"></i>
+                                เพิ่ม OT
+                            </a>
+                            <a href="#" class="btn btn-secondary" ng-click="init()">
+                                <i class="fas fa-sync"></i>
+                                เริ่มใหม่
+                            </a>
                         </div>
                         <table class="table table-list table-hover" ng-if="ot_list.length">
                             <thead>

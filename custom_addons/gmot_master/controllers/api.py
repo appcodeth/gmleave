@@ -537,6 +537,7 @@ class OTApi(http.Controller):
         if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
             sql = """
                     select
+                        ot.id,
                         ot.date,
                         em.approve_date,
                         ot.rate,
@@ -544,12 +545,13 @@ class OTApi(http.Controller):
                         sum(em.amount) as sum_amount
                     from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
                     where em.status='approve' and em.approve_date='{0}'
-                    group by ot.date, em.approve_date, ot.rate
+                    group by ot.id, ot.date, em.approve_date, ot.rate
                 """.format(approve)
         else:
             emp_id = self.get_employee_id()
             sql = """
                     select
+                        ot.id,
                         ot.date,
                         em.approve_date,
                         ot.rate,
@@ -557,7 +559,7 @@ class OTApi(http.Controller):
                         sum(em.amount) as sum_amount
                     from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
                     where em.status='approve' and em.approve_date='{0}' and em.employee_id={1}
-                    group by ot.date, em.approve_date, ot.rate
+                    group by ot.id, ot.date, em.approve_date, ot.rate
                 """.format(approve, emp_id)
         rows = []
         request.cr.execute(sql)
@@ -565,11 +567,12 @@ class OTApi(http.Controller):
 
         for o in results:
             rows.append({
-                'date': o[0].strftime('%d/%m/%Y') if o[0] else '',
-                'approve_date': o[1].strftime('%d/%m/%Y') if o[1] else '',
-                'rate': o[2],
-                'sum_hours': o[3],
-                'sum_amount': o[4],
+                'id': o[0],
+                'date': o[1].strftime('%d/%m/%Y') if o[1] else '',
+                'approve_date': o[2].strftime('%d/%m/%Y') if o[2] else '',
+                'rate': o[3],
+                'sum_hours': o[4],
+                'sum_amount': o[5],
             })
         return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
 
@@ -579,6 +582,7 @@ class OTApi(http.Controller):
         if request.env.user.user_has_groups('gmot_master.group_gmot_master_manager'):
             sql = """
                 select
+                    ot.id,
                     ot.date,
                     em.approve_date,
                     ot.rate,
@@ -586,12 +590,13 @@ class OTApi(http.Controller):
                     sum(em.amount) as sum_amount
                 from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
                 where em.status='approve' and em.approve_date='{0}'
-                group by ot.date, em.approve_date, ot.rate
+                group by ot.id, ot.date, em.approve_date, ot.rate
             """.format(approve)
         else:
             emp_id = self.get_employee_id()
             sql = """
                 select
+                    ot.id,
                     ot.date,
                     em.approve_date,
                     ot.rate,
@@ -599,7 +604,7 @@ class OTApi(http.Controller):
                     sum(em.amount) as sum_amount
                 from gmot_ot_employee em left join gmot_ot ot on em.ot_id=ot.id
                 where em.status='approve' and em.approve_date='{0}' and em.employee_id={1}
-                group by ot.date, em.approve_date, ot.rate
+                group by ot.id, ot.date, em.approve_date, ot.rate
             """.format(approve, emp_id)
         rows = []
         request.cr.execute(sql)
@@ -623,11 +628,100 @@ class OTApi(http.Controller):
         row_num = 1
         for o in results:
             sheet.write(row_num, 0, row_num)
-            sheet.write(row_num, 1, o[0].strftime('%Y-%m-%d') if o[0] else '')
-            sheet.write(row_num, 2, o[1].strftime('%Y-%m-%d') if o[1] else '')
+            sheet.write(row_num, 1, o[1].strftime('%Y-%m-%d') if o[1] else '')
+            sheet.write(row_num, 2, o[2].strftime('%Y-%m-%d') if o[2] else '')
+            sheet.write(row_num, 3, o[3])
+            sheet.write(row_num, 4, o[4])
+            sheet.write(row_num, 5, o[5])
+            row_num += 1
+        workbook.close()
+        output.seek(0)
+        response.stream.write(output.read())
+        return response
+
+    @http.route('/api/report/detail/employee/', type='http', auth='user')
+    def report_detail_employee(self, **kw):
+        ot_id = request.params.get('id')
+        approve_date = request.params.get('approve') + ' 00:00:00'
+        sql = """
+            select
+                em.code,
+                em.name,
+                d.name as dept_name,
+                p.name as pos_name,
+                sum(emot.hours) as total_hour,
+                sum(emot.amount) as total_amount
+            from gmot_ot_employee emot
+                left join gmleave_employee em on emot.employee_id=em.id
+                left join gmleave_position p on em.position_id=p.id
+                left join gmleave_department d on em.department_id=d.id
+            where emot.status='approve' and emot.ot_id={0} and emot.approve_date='{1}'
+            group by em.code, em.name, d.name, p.name
+            order by em.code asc
+            """.format(ot_id, approve_date)
+        rows = []
+        request.cr.execute(sql)
+        results = request.cr.fetchall()
+        for o in results:
+            rows.append({
+                'code': o[0],
+                'name': o[1],
+                'dept_name': o[2],
+                'pos_name': o[3],
+                'total_hour': o[4],
+                'total_amount': o[5],
+            })
+        return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
+
+    @http.route('/api/report/detail/employee/xlsx/', type='http', auth='user')
+    def report_detail_employee_excel(self, **kw):
+        ot_id = request.params.get('id')
+        approve_date = request.params.get('approve') + ' 00:00:00'
+        sql = """
+            select
+                em.code,
+                em.name,
+                d.name as dept_name,
+                p.name as pos_name,
+                sum(emot.hours) as total_hour,
+                sum(emot.amount) as total_amount
+            from gmot_ot_employee emot
+                left join gmleave_employee em on emot.employee_id=em.id
+                left join gmleave_position p on em.position_id=p.id
+                left join gmleave_department d on em.department_id=d.id
+            where emot.status='approve' and emot.ot_id={0} and emot.approve_date='{1}'
+            group by em.code, em.name, d.name, p.name
+            order by em.code asc
+            """.format(ot_id, approve_date)
+        rows = []
+        request.cr.execute(sql)
+        results = request.cr.fetchall()
+        response = request.make_response(
+            None,
+            headers=[
+                ('Content-Type', 'application/vnd.ms-excel'),
+                ('Content-Disposition', 'attachment; filename=ot_detail_report_by_employee_{0}.xlsx;'.format(request.params.get('approve')))
+            ]
+        )
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        sheet = workbook.add_worksheet('Sheet1')
+        sheet.write(0, 0, 'ลำดับ')
+        sheet.write(0, 1, 'รหัสพนักงาน')
+        sheet.write(0, 2, 'ชื่อ-นามสกุล')
+        sheet.write(0, 3, 'แผนก')
+        sheet.write(0, 4, 'ตำแหน่ง')
+        sheet.write(0, 5, 'ชั่วโมงทำงาน')
+        sheet.write(0, 6, 'จำนวนเงิน')
+        row_num = 1
+        for o in results:
+            sheet.write(row_num, 0, row_num)
+            sheet.write(row_num, 1, o[0])
+            sheet.write(row_num, 2, o[1])
             sheet.write(row_num, 3, o[2])
             sheet.write(row_num, 4, o[3])
             sheet.write(row_num, 5, o[4])
+            sheet.write(row_num, 6, o[5])
             row_num += 1
         workbook.close()
         output.seek(0)

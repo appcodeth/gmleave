@@ -4,7 +4,74 @@
         <t t-call="gmot_master.master_layouts">
             <t t-set="head">
                 <div class="container-fluid" ng-app="app" ng-controller="ctrl" ng-cloak="">
+
+
                     <input type="hidden" id="approve" t-att-value="approve"/>
+
+
+                    <div class="modal fade" id="otReportEmployeeModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="otReportEmployeeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="otReportEmployeeModalLabel">รายงาน OT ตามพนักงาน</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&amp;times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <table>
+                                            <tr>
+                                                <th>วันที่ OT :</th>
+                                                <td>@{ot.date}</td>
+                                                <td style="width:80px">&amp;nbsp;</td>
+                                                <th>วันที่อนุมัติ :</th>
+                                                <td>@{ot.approve_date}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <table class="table table-list table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:14%" class="text-center">รหัสพนักงาน</th>
+                                                <th>ชื่อ-นามสกุล</th>
+                                                <th style="width:12%">แผนก</th>
+                                                <th style="width:15%">ตำแหน่ง</th>
+                                                <th style="width:15%" class="text-center">ชั่วโมงทำงาน</th>
+                                                <th class="text-right">จำนวนเงิน</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="p in ot_employee_list">
+                                                <td class="text-center">@{p.code}</td>
+                                                <td>@{p.name}</td>
+                                                <td>@{p.dept_name}</td>
+                                                <td>@{p.pos_name}</td>
+                                                <td class="text-center">@{p.total_hour|number:0}</td>
+                                                <td class="text-right">@{p.total_amount|number:decimal_digits}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="4">รวม</th>
+                                                <th class="text-center">@{ot_emp_total_hour|number:0}</th>
+                                                <th class="text-right">@{ot_emp_total_amount|number:decimal_digits}</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" ng-click="otByEmployeeToExcel()">
+                                        <i class="fa fa-download"></i>
+                                        ส่งออกเป็น Excel
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./modals -->
+
                     <h2 class="my-4">รายงาน &amp;raquo;
                         <t t-esc="approve"></t>
                     </h2>
@@ -29,6 +96,7 @@
                                     <th class="text-center" style="width:15%">OT</th>
                                     <th class="text-center" style="width:15%">ชั่วโมงทำงาน</th>
                                     <th class="text-right">จำนวนเงิน</th>
+                                    <th class="text-center" t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')">พนักงาน</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,16 +105,21 @@
                                     <td class="text-center">@{ p.date }</td>
                                     <td class="text-center">@{ p.approve_date }</td>
                                     <td class="text-center">@{ p.rate|number:decimal_digits }</td>
-                                    <td class="text-center">@{ p.sum_hours }</td>
+                                    <td class="text-center">@{ p.sum_hours|number:0 }</td>
                                     <td class="text-right">@{ p.sum_amount|number:decimal_digits }</td>
+                                    <td class="text-center" t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')">
+                                        <a class="btn btn-info btn-sm" ng-click="otByEmployee(p)">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="3">รวม</th>
-                                    <th class="text-center">@{ total_ot|number:decimal_digits }</th>
-                                    <th class="text-center">@{ total_hours }</th>
+                                    <th colspan="4">รวม</th>
+                                    <th class="text-center">@{ total_hours|number:0 }</th>
                                     <th class="text-right">@{ total_amount|number:decimal_digits }</th>
+                                    <th t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')"></th>
                                 </tr>
                             </tfoot>
                         </table>
