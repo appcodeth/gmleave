@@ -118,54 +118,61 @@ function get_chart_overview_all() {
             'end': g_end_date1
         },
         success: function (res) {
-            Highcharts.chart('bar-container', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: ''
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-                    categories: [
-                        'ม.ค.',
-                        'ก.พ.',
-                        'มี.ค.',
-                        'เม.ย.',
-                        'พ.ค.',
-                        'มิ.ย.',
-                        'ก.ค.',
-                        'ส.ค.',
-                        'ก.ย.',
-                        'ต.ค.',
-                        'พ.ย.',
-                        'ธ.ค.'
-                    ],
-                    crosshair: true
-                },
-                yAxis: {
-                    min: 0,
+
+            try {
+                Highcharts.chart('bar-container', {
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'จำนวนวันลา (วัน)'
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} วัน</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: res.rows
-            });
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: [
+                            'ม.ค.',
+                            'ก.พ.',
+                            'มี.ค.',
+                            'เม.ย.',
+                            'พ.ค.',
+                            'มิ.ย.',
+                            'ก.ค.',
+                            'ส.ค.',
+                            'ก.ย.',
+                            'ต.ค.',
+                            'พ.ย.',
+                            'ธ.ค.'
+                        ],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'จำนวนวันลา (วัน)'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:</td><td style="padding:0"><b>{point.y:.1f} วัน</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: res.rows
+                });
+            }
+            catch(err) {
+              console.log(err);
+            }
+
         },
         error: function (err) {
             console.log('Connect error!', err);
@@ -183,6 +190,8 @@ function get_chart_overview_by_type() {
         },
         async: true,
         success: function (res) {
+
+        try {
             Highcharts.chart('bar-container', {
                 chart: {
                     type: 'column'
@@ -230,7 +239,12 @@ function get_chart_overview_by_type() {
                     }
                 },
                 series: res.rows
-            });
+             });
+            }
+            catch(err) {
+                console.log(err);
+            }
+
         },
         error: function (err) {
             console.log('Connect error!', err);
@@ -259,6 +273,8 @@ function get_chart_ratio_pie() {
         },
         async: true,
         success: function (res) {
+
+        try {
             Highcharts.chart('pie-container', {
                 chart: {
                     plotBackgroundColor: null,
@@ -289,6 +305,13 @@ function get_chart_ratio_pie() {
                     data: res.rows,
                 }]
             });
+        }
+        catch(err) {
+            console.log(err);
+        }
+
+
+
         },
         error: function (err) {
             console.log('Connect error!', err);
@@ -309,6 +332,8 @@ function get_chart_personal_by_type() {
         },
         async: true,
         success: function (res) {
+
+        try {
             Highcharts.chart('person-container', {
                 chart: {
                     type: 'column'
@@ -344,6 +369,12 @@ function get_chart_personal_by_type() {
                 },
                 series: res.rows
             });
+        }
+        catch(err) {
+            console.log(err);
+        }
+
+
         },
         error: function (err) {
             console.log('Connect error!', err);
@@ -361,6 +392,8 @@ function get_chart_personal_all() {
         },
         async: true,
         success: function (res) {
+
+        try {
             Highcharts.chart('person-container', {
                 chart: {
                     type: 'column'
@@ -396,6 +429,12 @@ function get_chart_personal_all() {
                 },
                 series: res.rows
             });
+        }
+        catch(err) {
+            console.log(err);
+        }
+
+
         },
         error: function (err) {
             console.log('Connect error!', err);
