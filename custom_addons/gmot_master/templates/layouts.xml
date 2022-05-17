@@ -7,7 +7,7 @@
                 <meta charset="utf-8"/>
                 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <title>GMOT Systems</title>
+                <title>GM-OT</title>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/bootstrap/css/bootstrap.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/font-awesome/css/all.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/datepicker/bootstrap-datepicker.min.css"/>
@@ -18,6 +18,7 @@
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/sweetalert/sweetalert2.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/vendor/confirm/jquery-confirm.min.css"/>
                 <link rel="stylesheet" href="/gmot_master/static/src/css/style.css"/>
+                <link rel="icon" type="image/x-icon" href="/gmot_master/static/src/img/company_logo.png"/>
             </head>
             <body>
                 <t t-set="image_url" t-value="'http://localhost:8069/web/image?model=res.users&amp;field=image_128&amp;id=' + str(request.env.user.id)"></t>

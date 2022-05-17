@@ -326,3 +326,39 @@ $(function() {
 
 });
 
+
+///////////////////////////////////////////////////////////
+
+function numberWithCommas(num) {
+    if (!num)
+        return 0;
+    return num.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberWithCommas(num, digits) {
+    if (!num)
+        return 0;
+    return num.toFixed(digits).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// counter report
+function runReportSummary() {
+    $.ajax({
+        url: '/api/dashboard/ot/amount/summary/',
+        type: 'get',
+        async: true,
+        success: function (res) {
+            $.each(res.rows, function (index, data) {
+                $('#total_ot').html(numberWithCommas(data.total_ot,2));
+                $('#total_approve').html(numberWithCommas(data.total_approve,2));
+                $('#total_draft').html(numberWithCommas(data.total_draft,2));
+                $('#total_draft_hours').html(numberWithCommas(data.total_draft_hours,2));
+            });
+        },
+        error: function (err) {
+            console.log('Connect error!', err);
+        }
+    });
+}
+
+runReportSummary();

@@ -175,6 +175,23 @@ body {
     margin-right: 10px;
 }
 
+.card-summary .icon .fas {
+  opacity: 0.3;
+}
+
+.card-summary .icon .far {
+  opacity: 0.3;
+}
+
+.card-summary .icon .fab {
+  opacity: 0.3;
+}
+
+.card-summary .card-body {
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+
 /*
 .sidemenu li>a {
     display: block;

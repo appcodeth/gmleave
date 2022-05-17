@@ -47,14 +47,14 @@
                                                 <td>@{p.name}</td>
                                                 <td>@{p.dept_name}</td>
                                                 <td>@{p.pos_name}</td>
-                                                <td class="text-center">@{p.total_hour|number:0}</td>
+                                                <td class="text-right">@{p.total_hour|number:decimal_digits}</td>
                                                 <td class="text-right">@{p.total_amount|number:decimal_digits}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="4">รวม</th>
-                                                <th class="text-center">@{ot_emp_total_hour|number:0}</th>
+                                                <th class="text-right">@{ot_emp_total_hour|number:decimal_digits}</th>
                                                 <th class="text-right">@{ot_emp_total_amount|number:decimal_digits}</th>
                                             </tr>
                                         </tfoot>
@@ -105,7 +105,7 @@
                                     <td class="text-center">@{ p.date }</td>
                                     <td class="text-center">@{ p.approve_date }</td>
                                     <td class="text-center">@{ p.rate|number:decimal_digits }</td>
-                                    <td class="text-center">@{ p.sum_hours|number:0 }</td>
+                                    <td class="text-center">@{ p.sum_hours|number:decimal_digits }</td>
                                     <td class="text-right">@{ p.sum_amount|number:decimal_digits }</td>
                                     <td class="text-center" t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')">
                                         <a class="btn btn-info btn-sm" ng-click="otByEmployee(p)">
@@ -117,7 +117,7 @@
                             <tfoot>
                                 <tr>
                                     <th colspan="4">รวม</th>
-                                    <th class="text-center">@{ total_hours|number:0 }</th>
+                                    <th class="text-center">@{ total_hours|number:decimal_digits }</th>
                                     <th class="text-right">@{ total_amount|number:decimal_digits }</th>
                                     <th t-if="request.env.user.user_has_groups('gmot_master.group_gmot_master_manager')"></th>
                                 </tr>

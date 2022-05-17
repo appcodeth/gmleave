@@ -727,3 +727,24 @@ class OTApi(http.Controller):
         output.seek(0)
         response.stream.write(output.read())
         return response
+
+    @http.route('/api/dashboard/ot/amount/summary/', type='http', auth='public')
+    def dashboard_ot_amout_summary(self, **kw):
+        sql = """
+            select
+                (select sum(emp.amount) from gmot_ot_employee emp left join gmot_ot ot on emp.ot_id=ot.id where to_char(ot.date, 'YYYY')='{0}') as total_ot,
+                (select sum(emp.amount) from gmot_ot_employee emp left join gmot_ot ot on emp.ot_id=ot.id where to_char(ot.date, 'YYYY')='{0}' and emp.status='approve') as total_approve,
+                (select sum(emp.amount) from gmot_ot_employee emp left join gmot_ot ot on emp.ot_id=ot.id where to_char(ot.date, 'YYYY')='{0}' and emp.status='draft') as total_draft,
+                (select sum(emp.hours) from gmot_ot_employee emp left join gmot_ot ot on emp.ot_id=ot.id where to_char(ot.date, 'YYYY')='{0}' and emp.status='draft') as total_draft_hours
+            """.format(datetime.now().year)
+        request.cr.execute(sql)
+        results = request.cr.fetchall()
+        rows = []
+        for r in results:
+            rows.append({
+                'total_ot': r[0],
+                'total_approve': r[1],
+                'total_draft': r[2],
+                'total_draft_hours': r[3],
+            })
+        return Response(json.dumps({'ok': True, 'rows': rows}), content_type='application/json')
