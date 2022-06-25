@@ -284,22 +284,25 @@ class OTApi(http.Controller):
                     p.name as position,
                     d.name as department,
                     (select sum(ot.amount) from gmot_ot_employee ot where ot.employee_id=e.id and ot.status='draft') as total_amount,
-                    (select sum(ot.amount) from gmot_ot_employee ot where ot.employee_id=e.id and ot.status='approve') as cumulative_amount
+                    (select sum(ot.amount) from gmot_ot_employee ot where ot.employee_id=e.id and ot.status='approve') as cumulative_amount,
+                    e.is_active
                 from
                     gmleave_employee e
                         left join gmleave_position p on e.position_id=p.id
                         left join gmleave_department d on e.department_id=d.id
-                where e.is_active=true
                 order by e.code asc, total_amount desc
             """
         rows = []
         request.cr.execute(sql)
         results = request.cr.fetchall()
         for o in results:
+            resign = ''
+            if o[7]:
+                resign = ' (ลาออก)'
             rows.append({
                 'id': o[0],
                 'code': o[1],
-                'name': o[2],
+                'name': o[2] + resign,
                 'position': o[3],
                 'department': o[4],
                 'total_amount': o[5],

@@ -102,7 +102,7 @@ class MainController(http.Controller):
         emp_id = request.params.get('id')
         employee = request.env['gmleave.employee'].sudo().search([('id', '=', emp_id)])
         approve_date_list = []
-        rows = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'approve')], order='approve_date')
+        rows = request.env['gmot.ot_employee'].sudo().search([('employee_id.id', '=', emp_id), ('status', '=', 'approve')], order='approve_date desc')
         for r in rows:
             approve_date = r.approve_date.strftime('%d/%m/%Y') if r.approve_date else ''
             if approve_date in approve_date_list:

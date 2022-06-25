@@ -66,7 +66,7 @@ app.controller('ctrl', function($scope, $timeout, factory) {
 
             if(result) {
                 hr = parseInt(item.hours, 10);
-                if(hr <= 0 || hr > 100) {
+                if(hr < 0 || hr > 100) {
                     err = 'กรุณากรอกชั่วโมงทำงานให้ถูกต้อง!\n';
                 }
             }
